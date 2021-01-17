@@ -1,4 +1,5 @@
 {
+  "exclude": ["web"],
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
