@@ -1,4 +1,4 @@
-# 毕业设计
+# 仿掘金的开发者论坛
 
 ## 功能
 
@@ -36,6 +36,10 @@
 - Node.js
 - Nest.js
 - OpenAPI (Swagger)
+- JSON Web Token (JWT)
+- RBAC 用户角色权限
+- HTTP/2 (not must)
+- OAuth 2 (not must)
 
 ### 数据库
 
