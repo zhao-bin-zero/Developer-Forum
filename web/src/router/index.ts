@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Layout from '@/layouts/Layout.vue';
+import Layout from '@/views/Layout.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -9,17 +9,11 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '/',
-        component: () => import('@/views/home/Home.vue'),
-        meta: { title: '面板' },
-      },
-      {
-        path: '/about',
-        name: 'About',
-        component: () => import('@/views/home/About.vue'),
-        meta: { title: '关于我' },
+        component: () => import('@/views/Home.vue'),
+        meta: { title: '首页' },
       },
     ],
-  },
+  }
 ];
 
 const router = createRouter({
