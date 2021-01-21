@@ -1,12 +1,12 @@
 module.exports = {
-  testEnvironment: "jsdom",
+  testEnvironment: 'jsdom',
   transform: {
-    "^.+\\.vue$": "vue-jest",
-    "^.+\\js$": "babel-jest",
+    '^.+\\.vue$': 'vue-jest',
+    '^.+\\js$': 'babel-jest',
   },
-  moduleFileExtensions: ["vue", "js", "json", "jsx", "ts", "tsx", "node"],
-  testMatch: ["**/test/**/*.spec.js", "**/__tests__/**/*.spec.js"],
+  moduleFileExtensions: ['vue', 'js', 'json', 'jsx', 'ts', 'tsx', 'node'],
+  testMatch: ['**/test/**/*.spec.js', '**/__tests__/**/*.spec.js'],
   moduleNameMapper: {
-    "^main(.*)$": "<rootDir>/src$1",
+    '^main(.*)$': '<rootDir>/src$1',
   },
 };

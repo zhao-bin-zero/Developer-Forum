@@ -1,12 +1,17 @@
 <template>
   <div id="home">
-    <p>Home</p>
-    <div>Hello Vue 3 + Vite</div>
+    <article-list />
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Home',
-};
+import { defineComponent } from 'vue';
+import ArticleList from '../components/ArticleList.vue';
+
+export default defineComponent({
+  components: { ArticleList },
+  setup() {
+    return {};
+  },
+});
 </script>

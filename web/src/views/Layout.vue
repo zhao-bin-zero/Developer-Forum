@@ -1,11 +1,9 @@
 <template>
-  <div id="layout">
-    <a-layout>
-      <m-header />
-      <a-layout-content><router-view /></a-layout-content>
-      <a-layout-footer>尾部</a-layout-footer>
-    </a-layout>
-  </div>
+  <a-layout>
+    <m-header />
+    <a-layout-content><router-view /></a-layout-content>
+    <a-layout-footer> 版权所有：MainHou ©2021 </a-layout-footer>
+  </a-layout>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -23,7 +21,7 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-#layout {
+.ant-layout {
   text-align: center;
 
   & .ant-layout-footer {
@@ -32,7 +30,9 @@ export default defineComponent({
   }
 
   & .ant-layout-content {
-    width: 100%;
+    max-width: 1200px;
+    background-color: #fff;
+    margin: 0 auto;
   }
 
   & > .ant-layout {
