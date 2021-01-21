@@ -1,17 +1,9 @@
 <template>
-  <div id="home">
-    <article-list />
-  </div>
+<div id="home">
+  <article-list></article-list>
+</div>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import ArticleList from '../components/ArticleList.vue';
-
-export default defineComponent({
-  components: { ArticleList },
-  setup() {
-    return {};
-  },
-});
 </script>

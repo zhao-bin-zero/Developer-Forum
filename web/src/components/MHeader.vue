@@ -35,27 +35,15 @@
   </a-layout-header>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { MessageOutlined } from '@ant-design/icons-vue';
 
-export default defineComponent({
-  name: 'MHeader',
-  components: {
-    MessageOutlined,
-  },
-  data() {
-    return {
-      value: '',
-    };
-  },
-  methods: {
-    onSearch(value) {
-      console.log('use value', value);
-      console.log('or use this.value', this.value);
-    },
-  },
-});
+const value = '';
+
+const onSearch = (newValue) => {
+  console.log('use value', newValue);
+  console.log('or use this.value', value);
+};
 </script>
 
 <style lang="postcss">

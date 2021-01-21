@@ -41,13 +41,13 @@
   </a-list>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {
   StarOutlined,
   LikeOutlined,
   MessageOutlined,
 } from '@ant-design/icons-vue';
-import { defineComponent } from 'vue';
+
 const listData = [];
 for (let i = 0; i < 23; i++) {
   listData.push({
@@ -56,28 +56,18 @@ for (let i = 0; i < 23; i++) {
     name: '小明',
   });
 }
-export default defineComponent({
-  components: {
-    StarOutlined,
-    LikeOutlined,
-    MessageOutlined,
+
+const pagination = {
+  onChange: (page) => {
+    console.log(page);
   },
-  data() {
-    return {
-      listData,
-      pagination: {
-        onChange: (page) => {
-          console.log(page);
-        },
-        pageSize: 3,
-      },
-      actions: [
-        { type: 'LikeOutlined', text: '156' },
-        { type: 'MessageOutlined', text: '2' },
-      ],
-    };
-  },
-});
+  pageSize: 3,
+};
+
+const actions = [
+  { type: 'LikeOutlined', text: '156' },
+  { type: 'MessageOutlined', text: '2' },
+];
 </script>
 
 <style lang="postcss" scoped>

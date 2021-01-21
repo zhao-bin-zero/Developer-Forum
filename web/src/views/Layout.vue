@@ -5,19 +5,9 @@
     <a-layout-footer> 版权所有：MainHou ©2021 </a-layout-footer>
   </a-layout>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue';
-import MHeader from '../components/MHeader.vue';
-export default defineComponent({
-  components: { MHeader },
-  name: 'HomeLayout',
-  data() {
-    return {
-      current: ['home'],
-    };
-  },
-  methods: {},
-});
+
+<script setup lang="ts">
+import MHeader from '@/components/MHeader.vue';
 </script>
 
 <style lang="postcss" scoped>
