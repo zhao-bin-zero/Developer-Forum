@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserController } from '../user/user.controller';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from 'config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserMoudle } from 'src/user/user.module';
 
 @Module({
   imports: [
@@ -11,8 +10,15 @@ import config from 'config';
       isGlobal: true, // 作用于全局
       load: [config], // 加载自定义配置项
     }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule], // 数据库配置项依赖于ConfigModule，需在此引入
+      useFactory: (configService: ConfigService) =>
+        configService.get('DATABASE_CONFIG'),
+      inject: [ConfigService], // 记得注入服务，不然useFactory函数中获取不到ConfigService
+    }),
+    UserMoudle,
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
