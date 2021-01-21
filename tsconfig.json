@@ -1,5 +1,5 @@
 {
-  "exclude": ["web", "config"],
+  "exclude": ["web","dist"],
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
