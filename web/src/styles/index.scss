@@ -1,0 +1,36 @@
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './ant-design-vue.scss';
+
+// 全局样式
+body {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    word-break: break-word;
+    overflow-y: scroll;
+}
+
+li {
+    display: inline-block;
+    list-style: none;
+}
+
+a {
+    color: #71777c;
+}
+
+.right {
+    position: relative;
+    top: 0;
+    right: 0;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    max-width: 960px;
+    margin: auto;
+}

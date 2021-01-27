@@ -1,9 +1,17 @@
 <template>
-<div id="home">
-  <article-list></article-list>
-</div>
+  <div class="home">
+    <nav-list />
+    <article-list></article-list>
+  </div>
 </template>
 
 <script setup lang="ts">
-import ArticleList from '../components/ArticleList.vue';
+import NavList from '@/components/NavList.vue';
+import ArticleList from '@/components/ArticleList.vue';
 </script>
+
+<style lang="scss" scoped>
+.home {
+  
+}
+</style>

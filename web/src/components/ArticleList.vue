@@ -70,8 +70,11 @@ const actions = [
 ];
 </script>
 
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
 .article-list {
-  width: 700px;
+  width: 100%;
+  background-color: #fff;
+  padding: 10px;
+  margin: 10px 0;
 }
 </style>

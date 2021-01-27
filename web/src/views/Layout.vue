@@ -1,8 +1,12 @@
 <template>
   <a-layout>
-    <m-header />
-    <a-layout-content><router-view /></a-layout-content>
-    <a-layout-footer> 版权所有：MainHou ©2021 </a-layout-footer>
+    <div class="header">
+      <a-layout-header class="container"><m-header /> </a-layout-header>
+    </div>
+    <a-layout-content class="container"><router-view /></a-layout-content>
+    <a-layout-footer class="footer container">
+      版权所有：MainHou ©2021
+    </a-layout-footer>
   </a-layout>
 </template>
 
@@ -10,22 +14,21 @@
 import MHeader from '@/components/MHeader.vue';
 </script>
 
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
 .ant-layout {
-  text-align: center;
+  position: relative;
 
-  & .ant-layout-footer {
-    line-height: 1.5;
+  .header {
+    width: 100%;
     background-color: #fff;
   }
 
-  & .ant-layout-content {
-    max-width: 1200px;
-    background-color: #fff;
+  .ant-layout-content {
     margin: 0 auto;
+    max-width: 960px;
   }
 
-  & > .ant-layout {
+  > .ant-layout {
     width: 100%;
   }
 }
