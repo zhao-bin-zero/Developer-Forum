@@ -4,7 +4,9 @@
 @import './ant-design-vue.scss';
 
 // 全局样式
-body {
+
+html {
+    font-size: 10px;
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -32,5 +34,5 @@ a {
     align-items: center;
     height: 100%;
     max-width: 960px;
-    margin: auto;
+    margin: 0 auto;
 }

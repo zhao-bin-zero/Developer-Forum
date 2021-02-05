@@ -3,7 +3,7 @@
     <ul>
       <li>
         <div href="#" class="logo">
-          <img src="/favicon.ico"/>
+          <img src="/favicon.ico" />
           <span>开发者社区</span>
         </div>
       </li>
@@ -19,22 +19,24 @@
       <li class="route-item">
         <router-link to="/events">活动</router-link>
       </li>
-      <li>
-        <a-input-search
-          v-model:value="value"
-          placeholder="input search text"
-          style="width: 200px"
-          @search="onSearch"
-        />
-      </li>
-      <li>
-        <a href="#">
-          <MessageOutlined />
-        </a>
-      </li>
-      <li>
-        <login />
-      </li>
+      <div class="right">
+        <li>
+          <a-input-search
+            v-model:value="value"
+            placeholder="input search text"
+            style="width: 200px"
+            @search="onSearch"
+          />
+        </li>
+        <li>
+          <a href="#">
+            <MessageOutlined />
+          </a>
+        </li>
+        <li>
+          <login />
+        </li>
+      </div>
     </ul>
   </nav>
 </template>
@@ -55,15 +57,31 @@ const onSearch = (newValue) => {
 <style lang="scss" scoped>
 .header {
   max-width: 960px;
-  font-size: 16px;
+  font-size: 1.6rem;
   nav {
+    .right {
+      display: inline-block;
+      float: right;
+    }
+    .right::after {
+      display: inline-block;
+      content: '';
+      clear: both;
+    }
     ul {
+      margin: 0 auto;
+      padding: 0;
       li {
         position: relative;
-        padding: 10px 10px 10px 0;
+        padding: 0 1.4rem;
+
+        &:first {
+          padding-right: 0;
+        }
 
         a {
           display: inline-block;
+           margin: 0 auto;
         }
 
         &.route-item:hover::after {
@@ -73,7 +91,7 @@ const onSearch = (newValue) => {
           bottom: 0;
           right: 0;
           left: 0;
-          border-bottom: 2px solid blue;
+          border-bottom: 0.2rem solid blue;
         }
       }
     }

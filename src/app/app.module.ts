@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from 'config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserMoudle } from 'src/user/user.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UserMoudle } from 'src/user/user.module';
       inject: [ConfigService], // 记得注入服务，不然useFactory函数中获取不到ConfigService
     }),
     UserMoudle,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

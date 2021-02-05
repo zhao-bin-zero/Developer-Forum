@@ -23,6 +23,10 @@ import MHeader from '@/components/MHeader.vue';
     background-color: #fff;
   }
 
+  .ant-layout-header {
+    padding: 0;
+  }
+
   .ant-layout-content {
     margin: 0 auto;
     max-width: 960px;

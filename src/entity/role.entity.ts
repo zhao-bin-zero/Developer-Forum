@@ -1,25 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate } from 'typeorm';
+import { BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 /**
- * User 存储类
- * @class User
+ * Role 存储类
+ * @class Role
  */
 @Entity()
-export class User {
+export class Role {
   @PrimaryGeneratedColumn()
-  user_id: number;
-
-  @Column('varchar', { length: 30 })
-  username: string;
-
-  @Column('text')
-  password: string;
-
-  @Column('varchar', { length: 10 })
-  roles: string;
+  role_id: number;
 
   @Column('varchar', { length: 200 })
-  avatar: string;
+  role_name: string;
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createTime: Date;

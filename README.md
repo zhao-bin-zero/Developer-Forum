@@ -49,7 +49,7 @@
 ### 持续集成服务
 
 - Github Actions
-- docker
+- docker (not must)
 
 ## use application
 
