@@ -13,10 +13,9 @@ export class UserController {
   async show(@Param('id') id: number) {
     const user: CreateUserDto[] = [
       {
-        id: 0,
+        user_id: 0,
         username: '小明',
         password: '123',
-        age: 12,
         roles: '1,2,3',
         avatar: 'https://localhost/x.png',
       },
