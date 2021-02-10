@@ -4,8 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/dto';
 
 /**
- * 检索用户并验证密码
- * @class AuthService
+ * 认证服务,检索用户并验证密码
  */
 @Injectable()
 export class AuthService {
@@ -14,6 +13,12 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  /**
+   * 验证用户
+   * @param username string 用户名
+   * @param password string 密码
+   * @returns Promise<any> CreateUserDto|null
+   */
   async validateUser(username: string, password: string): Promise<any> {
     const user: CreateUserDto = await this.userService.findOne(username);
     if (user && user.password == password) {
@@ -27,6 +32,7 @@ export class AuthService {
   /**
    * JWT登录
    * @param user 用户信息
+   * @returns token
    */
   async login(user: CreateUserDto) {
     const payload = { username: user, sub: user.user_id };
