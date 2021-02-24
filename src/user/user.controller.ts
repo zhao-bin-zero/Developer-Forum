@@ -1,6 +1,6 @@
 import { Controller, Get, Header, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateUserDto } from 'src/dto';
+import { CreateUserDto } from 'src/typings';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -16,7 +16,6 @@ export class UserController {
         user_id: 0,
         username: '小明',
         password: '123',
-        roles: '1,2,3',
         avatar: 'https://localhost/x.png',
       },
     ];

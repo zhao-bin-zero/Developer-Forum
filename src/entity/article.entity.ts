@@ -1,15 +1,18 @@
 import { BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 /**
- * 权限存储类
+ * 文章存储类
  */
 @Entity()
-export class Role {
+export class Article {
   @PrimaryGeneratedColumn()
-  role_id: number;
+  article_id: number;
 
-  @Column('varchar', { length: 200 })
-  role_name: string;
+  @Column({ type: 'boolean', default: () => false })
+  isPublished: boolean;
+
+  @Column('int')
+  authorId: number;
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createTime: Date;

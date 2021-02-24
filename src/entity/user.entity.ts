@@ -1,8 +1,9 @@
+import { type } from 'os';
 import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate } from 'typeorm';
+import { Role } from './role.entity';
 
 /**
- * User 存储类
- * @class User
+ * 用户存储类
  */
 @Entity()
 export class User {
@@ -15,9 +16,6 @@ export class User {
   @Column('text')
   password: string;
 
-  @Column('varchar', { length: 10 })
-  roles: string;
-
   @Column('varchar', { length: 200 })
   avatar: string;
 
@@ -26,6 +24,9 @@ export class User {
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   updateTime: Date;
+
+  @Column({ type: 'boolean', default: () => false })
+  isAdmin: boolean;
 
   @BeforeUpdate()
   updateTimestamp() {

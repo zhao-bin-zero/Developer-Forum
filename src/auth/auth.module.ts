@@ -7,6 +7,7 @@ import { LocalStrategy } from './local.strategy';
 import { UserMoudle } from 'src/user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
+import { CaslAbilityFactory } from './casl-ability.factory';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { JwtStrategy } from './jwt.strategy';
     }),
     ConfigModule,
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, CaslAbilityFactory],
   controllers: [AuthController],
+  exports: [CaslAbilityFactory],
 })
 export class AuthModule {}

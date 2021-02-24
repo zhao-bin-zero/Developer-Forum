@@ -20,6 +20,7 @@ import { ref } from 'vue';
 
 <style lang="scss" scoped>
 .nav-list {
+  font-size: .9rem;
   max-width: 960px;
   height: 100%;
   margin: auto;

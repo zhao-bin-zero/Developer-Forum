@@ -1,8 +1,7 @@
 import { Column, Entity, BeforeUpdate, PrimaryGeneratedColumn } from 'typeorm';
 
 /**
- * Perisssion 存储类
- * @class Perisssion
+ * 许可存储类
  */
 @Entity()
 export class Perisssion {

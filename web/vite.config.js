@@ -13,12 +13,12 @@ export default defineConfig({
     },
   },
   server: {
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://loaclhost:3000/',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, '')
-    //   }
-    // },
+    proxy: {
+      '/api': {
+        target: 'http://loaclhost:8000/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    },
   },
 });

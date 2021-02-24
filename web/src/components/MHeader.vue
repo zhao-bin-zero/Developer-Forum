@@ -57,7 +57,7 @@ const onSearch = (newValue) => {
 <style lang="scss" scoped>
 .header {
   max-width: 960px;
-  font-size: 1.6rem;
+  font-size: 1rem;
   nav {
     .right {
       display: inline-block;

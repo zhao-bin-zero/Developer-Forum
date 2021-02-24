@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from 'src/dto';
+import { CreateUserDto } from 'src/typings';
 
 /**
  * 认证服务,检索用户并验证密码

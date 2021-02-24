@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from 'src/dto';
+import { CreateUserDto } from 'src/typings';
 
 /**
  * @class UserService
