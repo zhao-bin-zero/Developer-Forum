@@ -1,6 +1,11 @@
-import { type } from 'os';
-import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate } from 'typeorm';
-import { Role } from './role.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BeforeUpdate,
+  OneToMany,
+} from 'typeorm';
+import { Article } from './article.entity';
 
 /**
  * 用户存储类
@@ -32,4 +37,7 @@ export class User {
   updateTimestamp() {
     this.updateTime = new Date();
   }
+
+  @OneToMany(() => Article, (article) => article.user)
+  articles: Article[];
 }

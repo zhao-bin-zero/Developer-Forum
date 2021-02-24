@@ -1,4 +1,11 @@
-import { BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeUpdate,
+  Column,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from './user.entity';
 
 /**
  * 文章存储类
@@ -24,4 +31,7 @@ export class Article {
   updateTimestamp() {
     this.updateTime = new Date();
   }
+
+  @OneToOne(() => User, (user) => user.articles)
+  user: User;
 }
