@@ -21,31 +21,31 @@ export class UserController {
   @Get('/')
   @Header('Context-Type', 'application/json')
   async show(@Query('user_id') user_id: number) {
-    return await this.userService.findOne(user_id);
+    return await this.userService.findOne(+user_id);
   }
 
   @Post()
   async create(@Body() user: User) {
-    return this.userService.create(user);
+    return await this.userService.create(user);
   }
 
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  async findAll() {
+    return await this.userService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @Get(':user_id')
+  async findOne(@Param('user_id') user_id: string) {
+    return await this.userService.findOne(+user_id);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() user: User) {
-    return this.userService.update(+id, user);
+  @Put(':user_id')
+  async update(@Param('id') user_id: string, @Body() user: User) {
+    return await this.userService.update(+user_id, user);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  @Delete(':user_id')
+  async remove(@Param('user_id') user_id: string) {
+    return await this.userService.remove(+user_id);
   }
 }
