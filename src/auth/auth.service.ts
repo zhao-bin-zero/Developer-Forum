@@ -15,12 +15,12 @@ export class AuthService {
 
   /**
    * 验证用户
-   * @param username string 用户名
+   * @param user_id string 用户名
    * @param password string 密码
    * @returns Promise<any> CreateUserDto|null
    */
-  async validateUser(username: string, password: string): Promise<any> {
-    const user: CreateUserDto = await this.userService.findOne(username);
+  async validateUser(user_id: number, password: string): Promise<any> {
+    const user: CreateUserDto = await this.userService.findOne(user_id);
     if (user && user.password == password) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;

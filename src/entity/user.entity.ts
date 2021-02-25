@@ -16,12 +16,12 @@ export class User {
   user_id: number;
 
   @Column('varchar', { length: 30 })
-  username: string;
+  nickname: string;
 
   @Column('text')
   password: string;
 
-  @Column('varchar', { length: 200 })
+  @Column({ type: 'varchar', length: 200, default: '' })
   avatar: string;
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })

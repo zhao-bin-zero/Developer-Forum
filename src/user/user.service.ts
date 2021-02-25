@@ -13,27 +13,33 @@ export class UserService {
 
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
-  ) {
-    // this.users = [
-    //   {
-    //     user_id: 1,
-    //     username: 'john',
-    //     password: 'changeme',
-    //   },
-    //   {
-    //     user_id: 2,
-    //     username: 'chris',
-    //     password: 'secret',
-    //   },
-    //   {
-    //     user_id: 3,
-    //     username: 'maria',
-    //     password: 'guess',
-    //   },
-    // ];
+  ) {}
+
+  async create(user: User) {
+    const result: User = await this.usersRepository.create(user);
+    return result;
   }
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.usersRepository.findOne(username);
+  async findAll() {
+    const allUser: User[] = await this.usersRepository.find();
+    return allUser;
+  }
+
+  async findOne(user_id: number): Promise<User> {
+    // fix Repository Bug 'into undefined return first User'
+    if (user_id == undefined) return undefined;
+    const user: User = await this.usersRepository.findOne(user_id);
+    return user;
+  }
+
+  async update(id: number, user: User) {
+    const result = await this.usersRepository.update(id, user);
+    return result;
+  }
+
+  async remove(id: number) {
+    const user: User = await this.findOne(id);
+    const result = await this.usersRepository.remove(user);
+    return result;
   }
 }

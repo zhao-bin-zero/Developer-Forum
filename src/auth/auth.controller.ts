@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 /**
  * 认证控制器
  */
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   /**
