@@ -12,9 +12,9 @@ async function bootstrap() {
   app.set('view engine', 'html');
   app.engine('html', __express);
   const options = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('API 文档')
-    .setVersion('1.0')
+    .setTitle('仿掘金的开发者论坛')
+    .setDescription('swagger文档')
+    .setVersion('0.1')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('swagger', app, document);

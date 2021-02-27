@@ -12,31 +12,41 @@ export class UserService {
     @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
 
-  async create(user: User) {
-    const result: User = await this.usersRepository.create(user);
-    return result;
+  async create(user: User): Promise<User> {
+    return await this.usersRepository.save(user);
   }
 
-  async findAll() {
-    const allUser: User[] = await this.usersRepository.find();
-    return allUser;
+  async findAll(): Promise<User[]> {
+    return await this.usersRepository.find();
   }
 
   async findOne(user_id: number): Promise<User> {
-    // fix Repository Bug 'into undefined return first User'
-    if (user_id == undefined) return undefined;
     const user: User = await this.usersRepository.findOne(user_id);
     return user;
   }
 
   async update(user_id: number, user: User) {
-    const result = await this.usersRepository.update(user_id, user);
-    return result;
+    return await this.usersRepository.update(user_id, user);
   }
 
   async remove(user_id: number) {
     const user: User = await this.findOne(user_id);
-    const result = await this.usersRepository.remove(user);
-    return result;
+    if (user == undefined) {
+      return {
+        code: 500,
+        error: '没有找到要删除的用户',
+      };
+    }
+    const r = await this.usersRepository.remove(user);
+    if (r == undefined) {
+      return {
+        code: 500,
+        error: '删除用户失败',
+      };
+    } else {
+      return {
+        code: 200,
+      };
+    }
   }
 }
