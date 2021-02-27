@@ -34,6 +34,15 @@ export class UserController {
   }
 
   @ApiTags('用户')
+  @Get('/username/:username')
+  async findByUsername(@Param('username') username) {
+    return {
+      code: 200,
+      data: await this.userService.findOneByUsername(username),
+    };
+  }
+
+  @ApiTags('用户')
   @Post('/')
   async create(@Body() user: User) {
     const result = await this.userService.create(user);

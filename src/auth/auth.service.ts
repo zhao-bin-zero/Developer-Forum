@@ -15,12 +15,17 @@ export class AuthService {
 
   /**
    * 验证用户
-   * @param user_id string 用户名
+   * @param username string 用户名
    * @param password string 密码
-   * @returns Promise<any> CreateUserDto|null
+   * @returns Promise<any>
    */
-  async validateUser(user_id: number, password: string): Promise<any> {
-    const user: CreateUserDto = await this.userService.findOne(user_id);
+  async validateUser(
+    username: string,
+    password: string,
+  ): Promise<null | CreateUserDto> {
+    const user: CreateUserDto = await this.userService.findOneByUsername(
+      username,
+    );
     if (user && user.password == password) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
@@ -35,6 +40,7 @@ export class AuthService {
    * @returns token
    */
   async login(user: CreateUserDto) {
+    //用于从用户对象属性的子集生成 jwt，然后以简单对象的形式返回一个 access_token 属性
     const payload = { username: user.username, sub: user.user_id };
     return {
       access_token: this.jwtService.sign(payload),
