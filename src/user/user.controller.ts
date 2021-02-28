@@ -11,11 +11,11 @@ import { ApiTags } from '@nestjs/swagger';
 import { User } from 'src/entity/user.entity';
 import { UserService } from './user.service';
 
+@ApiTags('用户')
 @Controller('api/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @ApiTags('用户')
   @Get(':user_id')
   async show(@Param('user_id') user_id: number) {
     return {
@@ -24,7 +24,6 @@ export class UserController {
     };
   }
 
-  @ApiTags('用户')
   @Get('')
   async index() {
     return {
@@ -33,7 +32,6 @@ export class UserController {
     };
   }
 
-  @ApiTags('用户')
   @Get('/username/:username')
   async findByUsername(@Param('username') username) {
     return {
@@ -42,11 +40,9 @@ export class UserController {
     };
   }
 
-  @ApiTags('用户')
-  @Post('/')
+  @Post('')
   async create(@Body() user: User) {
     const result = await this.userService.create(user);
-    console.log(result);
     if (result == undefined) {
       return {
         code: 500,
@@ -59,7 +55,6 @@ export class UserController {
     }
   }
 
-  @ApiTags('用户')
   @Put(':user_id')
   async update(@Param('user_id') user_id: string, @Body() user: User) {
     const result = await this.userService.update(+user_id, user);
@@ -75,7 +70,6 @@ export class UserController {
     }
   }
 
-  @ApiTags('用户')
   @Delete(':user_id')
   async remove(@Param('user_id') user_id: string) {
     return await this.userService.remove(+user_id);

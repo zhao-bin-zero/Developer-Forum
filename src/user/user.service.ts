@@ -21,8 +21,7 @@ export class UserService {
   }
 
   async findOne(user_id: number): Promise<User> {
-    const user: User = await this.usersRepository.findOne({ user_id });
-    return user;
+    return await this.usersRepository.findOne({ user_id });
   }
 
   async findOneByUsername(username: string): Promise<User> {
@@ -41,7 +40,7 @@ export class UserService {
         error: '没有找到要删除的用户',
       };
     }
-    const r = await this.usersRepository.remove(user);
+    const r: User = await this.usersRepository.remove(user);
     if (r == undefined) {
       return {
         code: 500,
