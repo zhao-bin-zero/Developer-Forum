@@ -3,7 +3,7 @@ import {
   BeforeUpdate,
   Column,
   Entity,
-  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Article } from './article.entity';
@@ -34,6 +34,6 @@ export class Tag {
     this.updateTime = new Date();
   }
 
-  @ManyToMany(() => Article, (article) => article.tags)
+  @OneToMany(() => Article, (article) => article.tags)
   articles: Article[];
 }

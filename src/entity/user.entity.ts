@@ -5,8 +5,10 @@ import {
   PrimaryGeneratedColumn,
   BeforeUpdate,
   OneToMany,
+  ManyToMany,
 } from 'typeorm';
 import { Article } from './article.entity';
+import { Role } from './role.entity';
 
 /**
  * 用户存储类
@@ -37,10 +39,6 @@ export class User {
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   updateTime: Date;
 
-  @ApiProperty()
-  @Column({ type: 'boolean', default: () => false })
-  isAdmin: boolean;
-
   @BeforeUpdate()
   updateTimestamp() {
     this.updateTime = new Date();
@@ -48,4 +46,7 @@ export class User {
 
   @OneToMany(() => Article, (article) => article.user)
   articles: Article[];
+
+  @ManyToMany(() => Role, (role) => role.users)
+  roles: Role[];
 }

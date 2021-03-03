@@ -5,19 +5,21 @@ import {
   ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Permission } from './permission.entity';
-import { User } from './user.entity';
+import { Role } from './role.entity';
 
 /**
- * 角色存储类
+ * 权限存储类
  */
 @Entity()
-export class Role {
+export class Permission {
   @PrimaryGeneratedColumn()
-  role_id: number;
+  permission_id: number;
 
-  @Column('varchar', { length: 200 })
-  role_name: string;
+  @Column('varchar', { length: 200, comment: '权限表达式' })
+  permission_experssion: string;
+
+  @Column({ type: 'text', comment: '权限描述' })
+  permission_description: string;
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createTime: Date;
@@ -30,9 +32,6 @@ export class Role {
     this.updateTime = new Date();
   }
 
-  @ManyToMany(() => Permission, (permission) => permission.roles)
-  permissions: Permission[];
-
-  @ManyToMany(() => User, (user) => user.roles)
-  users: User[];
+  @ManyToMany(() => Role, (role) => role.permissions)
+  roles: Role[];
 }

@@ -17,12 +17,18 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('login')
   async login(@Request() req) {
-    return this.authService.login(req.user);
+    return {
+      code: 200,
+      data: await this.authService.login(req.user),
+    };
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('profile')
+  @Post('profile')
   getProfile(@Request() req) {
-    return req.user;
+    return {
+      code: 200,
+      data: req.user,
+    };
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/typings';
+import { User } from 'src/entity/user.entity';
 
 /**
  * 认证服务,检索用户并验证密码
@@ -19,17 +20,12 @@ export class AuthService {
    * @param password string 密码
    * @returns Promise<any>
    */
-  async validateUser(
-    username: string,
-    password: string,
-  ): Promise<null | CreateUserDto> {
-    const user: CreateUserDto = await this.userService.findOneByUsername(
-      username,
-    );
+  async validateUser(username: string, password: string): Promise<User> {
+    const user: User = await this.userService.findOneByUsername(username);
     if (user && user.password == password) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
-      return result;
+      return result as User;
     }
     return null;
   }

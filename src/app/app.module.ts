@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserMoudle } from 'src/user/user.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from 'src/auth/roles.guard';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { AppController } from './app.controller';
 import { ArticleModule } from 'src/article/article.module';
 
