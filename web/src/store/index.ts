@@ -44,6 +44,7 @@ export default createStore({
                 getInfo(this.state.token).then(r => {
                     const result = r.data
                     commit('SET_NAME', result.username)
+                    localStorage.setItem('username', result.username);
                     commit('SET_AVATAR', result.avatar)
                     resolve(r)
                 }).catch(error => {
@@ -58,6 +59,7 @@ export default createStore({
                     commit('SET_TOKEN', '')
                     commit('SET_ROLES', [])
                     localStorage.removeItem(ACCESS_TOKEN)
+                    localStorage.removeItem('username');
                     resolve()
                 }).catch(() => {
                     message.error('登录失败');

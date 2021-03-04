@@ -1,7 +1,9 @@
 <template>
   <div class="login">
-    <a-button type="primary" @click="showModal"> 登录 </a-button>
-    <div v-if="false">你好:</div>
+    <a-button v-if="!isLogin" type="primary" @click="showModal">
+      登录
+    </a-button>
+    <div v-if="isLogin">你好：{{store.getters.username}}</div>
     <a-modal
       title="登录"
       v-model:visible="visible"
@@ -26,19 +28,14 @@
 
 <script setup lang="ts">
 import { userData } from '../typings';
-import { computed, reactive, ref, watch } from 'vue';
+import { reactive, ref } from 'vue';
 import { useStore } from 'vuex';
+import message from 'ant-design-vue/es/message';
 
 const visible = ref<boolean>(false);
 const confirmLoading = ref<boolean>(false);
+const isLogin = ref<boolean>(false);
 const store = useStore();
-
-computed(()=> {
-  const token =  store.getters.token;
-  return {
-    token
-  }
-})
 
 const showModal = () => {
   visible.value = true;
@@ -49,8 +46,12 @@ const handleOk = (e: EventTarget) => {
   visible.value = false;
   confirmLoading.value = false;
   (async () => {
-    await store.dispatch('login', form).then();
-    await store.dispatch('GetInfo');
+    await store.dispatch('login', form).then(() => {
+      message.success('登录成功');
+    });
+    await store.dispatch('GetInfo').then(()=> {
+      isLogin.value = true;
+    });
   })();
 };
 
