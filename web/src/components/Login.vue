@@ -3,7 +3,27 @@
     <a-button v-if="!isLogin" type="primary" @click="showModal">
       登录
     </a-button>
-    <div v-if="isLogin">你好：{{store.getters.username}}</div>
+    <div v-if="isLogin">
+      <a-dropdown>
+        <a class="ant-dropdown-link" @click.prevent>
+          你好：{{store.getters.username}}
+          <DownOutlined />
+        </a>
+        <template #overlay>
+          <a-menu>
+            <a-menu-item>
+              <a href="javascript:;">我的主页</a>
+            </a-menu-item>
+            <a-menu-item>
+              <a href="javascript:;">我的收藏</a>
+            </a-menu-item>
+            <a-menu-item>
+              <a href="javascript:;">标签管理</a>
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+    </div>
     <a-modal
       title="登录"
       v-model:visible="visible"
@@ -31,6 +51,7 @@ import { userData } from '../typings';
 import { reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import message from 'ant-design-vue/es/message';
+import { DownOutlined } from '@ant-design/icons-vue';
 
 const visible = ref<boolean>(false);
 const confirmLoading = ref<boolean>(false);
