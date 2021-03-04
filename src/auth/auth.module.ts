@@ -3,12 +3,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { LocalStrategy } from './local.strategy';
+import { LocalStrategy } from './strategies/local.strategy';
 import { UserMoudle } from 'src/user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtStrategy } from './jwt.strategy';
-import { CaslAbilityFactory } from './casl-ability.factory';
-
+import { JwtStrategy } from './strategies/jwt.strategy';
 @Module({
   imports: [
     UserMoudle,
@@ -18,13 +16,13 @@ import { CaslAbilityFactory } from './casl-ability.factory';
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('jwtConstants.secret'),
         // 有效期30分钟
-        signOptions: { expiresIn: '1800s' },
+        signOptions: { expiresIn: 3600 },
       }),
     }),
     ConfigModule,
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, CaslAbilityFactory],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
-  exports: [CaslAbilityFactory],
+  exports: [],
 })
 export class AuthModule {}

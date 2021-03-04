@@ -1,35 +1,25 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
   BeforeUpdate,
+  Column,
+  Entity,
   OneToMany,
-  ManyToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Article } from './article.entity';
-import { Role } from './role.entity';
 
-/**
- * 用户存储类
- */
 @Entity()
-export class User {
+/**
+ *标签存储类
+ */
+export class Tag {
   @ApiProperty()
   @PrimaryGeneratedColumn()
-  user_id: number;
+  tag_id: number;
 
   @ApiProperty()
   @Column({ type: 'varchar', length: 30, unique: true })
-  username: string;
-
-  @ApiProperty()
-  @Column('text')
-  password: string;
-
-  @ApiProperty()
-  @Column({ type: 'varchar', length: 200, default: '' })
-  avatar: string;
+  tagname: string;
 
   @ApiProperty()
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
@@ -44,9 +34,6 @@ export class User {
     this.updateTime = new Date();
   }
 
-  @OneToMany(() => Article, (article) => article.user)
+  @OneToMany(() => Article, (article) => article.tags)
   articles: Article[];
-
-  @ManyToMany(() => Role, (role) => role.users)
-  roles: Role[];
 }

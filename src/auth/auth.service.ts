@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/typings';
+import { User } from 'src/entity/user.entity';
 
 /**
  * 认证服务,检索用户并验证密码
@@ -17,14 +18,14 @@ export class AuthService {
    * 验证用户
    * @param username string 用户名
    * @param password string 密码
-   * @returns Promise<any> CreateUserDto|null
+   * @returns Promise<any>
    */
-  async validateUser(username: string, password: string): Promise<any> {
-    const user: CreateUserDto = await this.userService.findOne(username);
+  async validateUser(username: string, password: string): Promise<User> {
+    const user: User = await this.userService.findOneByUsername(username);
     if (user && user.password == password) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
-      return result;
+      return result as User;
     }
     return null;
   }
@@ -35,6 +36,7 @@ export class AuthService {
    * @returns token
    */
   async login(user: CreateUserDto) {
+    //用于从用户对象属性的子集生成 jwt，然后以简单对象的形式返回一个 access_token 属性
     const payload = { username: user.username, sub: user.user_id };
     return {
       access_token: this.jwtService.sign(payload),

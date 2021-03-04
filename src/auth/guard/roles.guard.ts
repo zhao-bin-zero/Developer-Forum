@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Role } from 'src/entity/role.entity';
-import { ROLES_KEY } from './roles.decorator';
+import { ROLES_KEY } from '../roles.decorator';
 
 /**
  * 比较当前用户拥有的角色和当前路径需要的角色

@@ -1,11 +1,13 @@
 import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 
 /**
  * 认证控制器
  */
-@Controller('auth')
+@ApiTags('授权，认证')
+@Controller('api/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   /**
@@ -15,13 +17,18 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('login')
   async login(@Request() req) {
-    return this.authService.login(req.user);
+    return {
+      code: 200,
+      data: await this.authService.login(req.user),
+    };
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get('profile')
+  @Post('profile')
   getProfile(@Request() req) {
-    console.log(req.user);
-    return req.user;
+    return {
+      code: 200,
+      data: req.user,
+    };
   }
 }

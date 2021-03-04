@@ -9,9 +9,3 @@
 import NavList from '@/components/NavList.vue';
 import ArticleList from '@/components/ArticleList.vue';
 </script>
-
-<style lang="scss" scoped>
-.home {
-  
-}
-</style>

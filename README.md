@@ -35,11 +35,11 @@
 
 - Node.js
 - Nest.js
-- OpenAPI (Swagger)
-- JSON Web Token (JWT)
-- RBAC 用户角色权限
-- HTTP/2 (not must)
-- OAuth 2 (not must)
+- [X] OpenAPI (Swagger)
+- [X] JSON Web Token (JWT)
+- [] RBAC 用户角色权限
+- [X] OAuth 2 (not must)
+- [] HTTP/2 (not must)
 
 ### 数据库
 
