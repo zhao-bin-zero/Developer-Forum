@@ -8,9 +8,18 @@ import { Repository } from 'typeorm';
 export class ArticleService {
   constructor(
     @InjectRepository(Article) private articleRepository: Repository<Article>,
+    @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
   async create(article: Article): Promise<Article> {
-    return await this.articleRepository.save(article);
+    const user = new User();
+    user.user_id = article.user_id;
+    article.user = user;
+    try {
+      await this.userRepository.save(user);
+      return await this.articleRepository.save(article);
+    } catch (e) {
+      throw e;
+    }
   }
 
   async findPaging(

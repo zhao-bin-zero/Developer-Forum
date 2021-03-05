@@ -32,6 +32,5 @@ export class Tag {
   update_at: Date;
 
   @OneToMany(() => Article, (article) => article.tags)
-  @JoinColumn({ name: 'tagname', referencedColumnName: 'tagname' })
   articles: Article[];
 }

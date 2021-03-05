@@ -3,7 +3,6 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -49,10 +48,15 @@ export class Article {
   @UpdateDateColumn()
   update_at: Date;
 
+  user_id?: number;
+
+  tag_id?: number;
+
   @JoinColumn({ name: 'user_id' })
-  @ManyToOne(() => User, (user) => user.articles)
+  @OneToOne(() => User, (user) => user.articles)
   user: User;
 
+  @JoinColumn({ name: 'tag_id' })
   @OneToOne(() => Tag, (tag) => tag.articles)
   tags: Tag[];
 }
