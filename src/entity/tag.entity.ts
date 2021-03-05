@@ -1,10 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  BeforeUpdate,
   Column,
+  CreateDateColumn,
   Entity,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Article } from './article.entity';
 
@@ -22,18 +24,14 @@ export class Tag {
   tagname: string;
 
   @ApiProperty()
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
-  createTime: Date;
+  @CreateDateColumn()
+  create_at: Date;
 
   @ApiProperty()
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
-  updateTime: Date;
-
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updateTime = new Date();
-  }
+  @UpdateDateColumn()
+  update_at: Date;
 
   @OneToMany(() => Article, (article) => article.tags)
+  @JoinColumn({ name: 'tagname', referencedColumnName: 'tagname' })
   articles: Article[];
 }

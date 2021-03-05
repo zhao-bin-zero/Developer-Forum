@@ -1,38 +1,35 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
-  BeforeUpdate,
   Column,
+  CreateDateColumn,
   Entity,
   ManyToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Permission } from './permission.entity';
-import { User } from './user.entity';
 
 /**
  * 角色存储类
  */
 @Entity()
 export class Role {
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   role_id: number;
 
+  @ApiProperty()
   @Column('varchar', { length: 200 })
   role_name: string;
 
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
-  createTime: Date;
+  @ApiProperty()
+  @CreateDateColumn()
+  created_at: Date;
 
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  @ApiProperty()
+  @UpdateDateColumn()
   updateTime: Date;
-
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updateTime = new Date();
-  }
 
   @ManyToMany(() => Permission, (permission) => permission.roles)
   permissions: Permission[];
-
-  @ManyToMany(() => User, (user) => user.roles)
-  users: User[];
 }

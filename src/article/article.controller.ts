@@ -6,6 +6,7 @@ import {
   Put,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Article } from 'src/entity/article.entity';
@@ -32,10 +33,13 @@ export class ArticleController {
   }
 
   @Get('')
-  async index() {
+  async index(
+    @Query('currentPage') currentPage: number,
+    @Query('onePageAmount') onePageAmount: number,
+  ) {
     return {
       code: 200,
-      data: await this.articleService.findAll(),
+      data: await this.articleService.findPaging(currentPage, onePageAmount),
     };
   }
 

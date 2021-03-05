@@ -27,7 +27,7 @@ export default createStore({
     actions: {
         // 登录
         login({ commit }, userInfo) {
-            return new Promise<void>( (resolve, reject) => {
+            return new Promise<void>((resolve, reject) => {
                 login(userInfo).then(r => {
                     const result = r.data
                     localStorage.setItem(ACCESS_TOKEN, result.access_token)
@@ -35,6 +35,7 @@ export default createStore({
                     resolve()
                 }).catch(error => {
                     message.error('登录失败');
+                    reject();
                 })
             })
         },
@@ -49,12 +50,13 @@ export default createStore({
                     resolve(r)
                 }).catch(error => {
                     message.error('登录失败');
+                    reject();
                 })
             })
         },
         // 登出
         Logout({ commit, state }) {
-            return new Promise<void>((resolve) => {
+            return new Promise<void>((resolve, reject) => {
                 logout(state.token).then(() => {
                     commit('SET_TOKEN', '')
                     commit('SET_ROLES', [])
@@ -63,6 +65,7 @@ export default createStore({
                     resolve()
                 }).catch(() => {
                     message.error('登录失败');
+                    reject();
                 }).finally(() => {
                 })
             })

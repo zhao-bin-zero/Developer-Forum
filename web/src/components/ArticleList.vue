@@ -34,7 +34,7 @@
           <template #title>
             <a :href="item.href">{{ item.title }}</a>
           </template>
-          <template #avatar>{{ item.name }}</template>
+          <template #avatar>{{ item.username }}</template>
         </a-list-item-meta>
       </a-list-item>
     </template>
@@ -51,9 +51,10 @@ import {
 const listData = [];
 for (let i = 0; i < 23; i++) {
   listData.push({
-    href: 'https://www.antdv.com/',
+    href: '#',
     title: `ant design vue part ${i}`,
-    name: '小明',
+    username: '小明',
+    description: '描述'
   });
 }
 

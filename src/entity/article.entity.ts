@@ -1,9 +1,12 @@
 import {
-  BeforeUpdate,
   Column,
+  CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 import { Tag } from './tag.entity';
@@ -20,6 +23,14 @@ export class Article {
 
   @ApiProperty()
   @Column('text')
+  title: string;
+
+  @ApiProperty()
+  @Column('text')
+  description: string;
+
+  @ApiProperty()
+  @Column('text')
   content: string;
 
   @ApiProperty()
@@ -31,23 +42,15 @@ export class Article {
   isPublished: boolean;
 
   @ApiProperty()
-  @Column('int')
-  authorId: number;
+  @CreateDateColumn()
+  created_at: Date;
 
   @ApiProperty()
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
-  createTime: Date;
+  @UpdateDateColumn()
+  update_at: Date;
 
-  @ApiProperty()
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
-  updateTime: Date;
-
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updateTime = new Date();
-  }
-
-  @OneToOne(() => User, (user) => user.articles)
+  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => User, (user) => user.articles)
   user: User;
 
   @OneToOne(() => Tag, (tag) => tag.articles)

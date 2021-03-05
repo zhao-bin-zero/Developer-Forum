@@ -3,12 +3,12 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  BeforeUpdate,
   OneToMany,
-  ManyToMany,
+  UpdateDateColumn,
+  CreateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { Article } from './article.entity';
-import { Role } from './role.entity';
 
 /**
  * 用户存储类
@@ -32,21 +32,14 @@ export class User {
   avatar: string;
 
   @ApiProperty()
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
-  createTime: Date;
+  @CreateDateColumn()
+  created_at: Date;
 
   @ApiProperty()
-  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  @UpdateDateColumn()
   updateTime: Date;
 
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updateTime = new Date();
-  }
-
+  @JoinColumn()
   @OneToMany(() => Article, (article) => article.user)
   articles: Article[];
-
-  @ManyToMany(() => Role, (role) => role.users)
-  roles: Role[];
 }

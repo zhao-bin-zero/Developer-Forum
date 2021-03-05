@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from 'src/entity/article.entity';
+import { User } from 'src/entity/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -12,8 +13,14 @@ export class ArticleService {
     return await this.articleRepository.save(article);
   }
 
-  async findAll(): Promise<Article[]> {
-    return await this.articleRepository.find();
+  async findPaging(
+    currentPage: number,
+    onePageAmount: number,
+  ): Promise<Article[]> {
+    return await this.articleRepository.find({
+      skip: (currentPage - 1) * onePageAmount,
+      take: onePageAmount,
+    });
   }
 
   async findOne(article_id: number): Promise<Article> {
