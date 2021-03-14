@@ -28,6 +28,14 @@ export class Article {
   @Column('text')
   description: string;
 
+  @ApiProperty({ default: 0 })
+  @Column('int')
+  like: number;
+
+  @ApiProperty({ default: 0 })
+  @Column('int')
+  view: number;
+
   @ApiProperty()
   @Column('text')
   content: string;

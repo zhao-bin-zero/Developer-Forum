@@ -12,7 +12,7 @@
     <template #renderItem="{ item }">
       <a-list-item key="item.title">
         <template #actions>
-          <span v-for="{ type, text } in actions" :key="type">
+          <span v-for="{ type, text } in item.actions" :key="type">
             <component v-bind:is="type" style="margin-right: 8px" />
             {{ text }}
           </span>
@@ -26,49 +26,70 @@
         </template>
         <div>
           <a href="#name"
-            ><span>{{ item.name }} </span></a
+            ><span>{{ item.username }} </span></a
           >·<a href="#time"><span>12小时前</span></a
           >·<a href="#type"><span>JavaScript</span></a>
         </div>
         <a-list-item-meta :description="item.description">
           <template #title>
-            <a :href="item.href">{{ item.title }}</a>
+            <a :href="'/article/' + item.article_id">{{ item.title }}</a>
           </template>
-          <template #avatar>{{ item.username }}</template>
         </a-list-item-meta>
       </a-list-item>
     </template>
   </a-list>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import {
   StarOutlined,
   LikeOutlined,
   MessageOutlined,
 } from '@ant-design/icons-vue';
-
-const listData = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: '#',
-    title: `ant design vue part ${i}`,
-    username: '小明',
-    description: '描述'
-  });
-}
-
-const pagination = {
-  onChange: (page) => {
-    console.log(page);
+import { defineComponent } from 'vue';
+import { artcileList, artcileCount } from '../api/article';
+const pageSize: number = 1;
+export default defineComponent({
+  components: {
+    StarOutlined,
+    LikeOutlined,
+    MessageOutlined,
   },
-  pageSize: 3,
-};
+  data() {
+    // 文章数据
+    const listData: Record<string, string | number>[] = [];
+    // 文章总数
+    let countArticle: number;
+    return {
+      listData,
+      countArticle,
+    };
+  },
+  async created() {
+    // 获得文章总个数
+    const countData = await artcileCount();
+    const total = countData.data.count || 0;
+    this.countArticle = countData.data.count;
+    const pagination = {
+      onChange: (page: number) => {
+        console.log(page);
+      },
+      pageSize:2,
+      total:8,
+    };
 
-const actions = [
-  { type: 'LikeOutlined', text: '156' },
-  { type: 'MessageOutlined', text: '2' },
-];
+    // 获得文章列表
+    const articleData = await artcileList(1, pageSize);
+    articleData.data.forEach((item, index) => {
+      this.listData.push(item);
+      this.listData[index].actions = [
+        { type: 'StarOutlined', text: item.view },
+        { type: 'LikeOutlined', text: item.like },
+      ];
+      this.action;
+    });
+  },
+});
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/user.entity';
+import { ResponseData } from 'src/typings';
 import { Repository } from 'typeorm';
 
 /**
@@ -32,23 +33,23 @@ export class UserService {
     return await this.usersRepository.update(user_id, user);
   }
 
-  async remove(user_id: number) {
+  async remove(user_id: number): Promise<ResponseData> {
     const user: User = await this.findOne(user_id);
     if (user == undefined) {
       return {
-        code: 500,
-        error: '没有找到要删除的用户',
+        statusCode: 500,
+        message: '没有找到要删除的用户',
       };
     }
     const r: User = await this.usersRepository.remove(user);
     if (r == undefined) {
       return {
-        code: 500,
-        error: '删除用户失败',
+        statusCode: 500,
+        message: '删除用户失败',
       };
     } else {
       return {
-        code: 200,
+        statusCode: 200,
       };
     }
   }

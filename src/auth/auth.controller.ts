@@ -1,6 +1,7 @@
-import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, Logger, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
+import { ResponseData } from 'src/typings';
 import { AuthService } from './auth.service';
 
 /**
@@ -16,18 +17,33 @@ export class AuthController {
    */
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Request() req) {
-    return {
-      code: 200,
-      data: await this.authService.login(req.user),
-    };
+  async login(@Request() req): Promise<ResponseData> {
+    try {
+      const data = await this.authService.login(req.user);
+      return {
+        statusCode: 200,
+        data,
+      };
+    } catch (error) {
+      Logger.error(error);
+      return {
+        statusCode: 401,
+        message: '没有登录权限',
+      };
+    }
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Post('profile')
-  getProfile(@Request() req) {
+  async getProfile(@Request() req): Promise<ResponseData> {
+    if (!req.user) {
+      return {
+        statusCode: 401,
+        message: '登录过期',
+      };
+    }
     return {
-      code: 200,
+      statusCode: 200,
       data: req.user,
     };
   }

@@ -1,7 +1,8 @@
 import request from '../utils/request';
 
 const articleApi = {
-    List: '/api/user/article'
+    List: '/api/article',
+    Count: '/api/article/count',
 };
 
 /**
@@ -17,5 +18,15 @@ export function artcileList(currentPage: number, onePageAmount: number) {
             currentPage,
             onePageAmount
         }
+    })
+}
+
+/**
+ * 文章总个数
+ */
+export function artcileCount() {
+    return request({
+        url: articleApi.Count,
+        method: 'GET',
     })
 }
