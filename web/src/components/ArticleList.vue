@@ -46,48 +46,59 @@ import {
   LikeOutlined,
   MessageOutlined,
 } from '@ant-design/icons-vue';
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, ref, reactive } from 'vue';
 import { artcileList, artcileCount } from '../api/article';
-const pageSize: number = 1;
+async function getList(current, pageSize, listData) {
+  // 获得文章列表
+  const articleData = await artcileList(current, pageSize);
+  articleData.data.forEach((item, index) => {
+    listData.push(item);
+    listData[index].actions = [
+      { type: 'StarOutlined', text: item.view },
+      { type: 'LikeOutlined', text: item.like },
+    ];
+  });
+}
+
 export default defineComponent({
   components: {
     StarOutlined,
     LikeOutlined,
     MessageOutlined,
   },
-  data() {
+  setup() {
+    // 一页文章最大数
+    const pageSize: number = 2;
     // 文章数据
-    const listData: Record<string, string | number>[] = [];
+    const listData = reactive<Record<string, string | number>[]>([]);
     // 文章总数
-    let countArticle: number;
+    const count = ref<number>(0);
+    const current = ref<number>(1);
+
+    const pagination = reactive({
+      onChange: async (page: number) => {
+        console.log(page);
+        current.value = page;
+        listData.length = 0;
+        await getList(current.value, pageSize, listData);
+      },
+      current: current,
+      pageSize,
+      total: count,
+    });
+
+    onMounted(async () => {
+      // 获得文章总个数
+      count.value = (await artcileCount()).data.count;
+      // 获取文章数据
+      await getList(current.value, pageSize, listData);
+      pagination.total = count.value;
+    });
+
     return {
       listData,
-      countArticle,
+      pagination,
     };
-  },
-  async created() {
-    // 获得文章总个数
-    const countData = await artcileCount();
-    const total = countData.data.count || 0;
-    this.countArticle = countData.data.count;
-    const pagination = {
-      onChange: (page: number) => {
-        console.log(page);
-      },
-      pageSize:2,
-      total:8,
-    };
-
-    // 获得文章列表
-    const articleData = await artcileList(1, pageSize);
-    articleData.data.forEach((item, index) => {
-      this.listData.push(item);
-      this.listData[index].actions = [
-        { type: 'StarOutlined', text: item.view },
-        { type: 'LikeOutlined', text: item.like },
-      ];
-      this.action;
-    });
   },
 });
 </script>
