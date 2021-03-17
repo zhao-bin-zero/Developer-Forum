@@ -30,7 +30,7 @@ export class Article {
 
   @ApiProperty({ default: 0 })
   @Column('int')
-  like: number;
+  enjoy: number;
 
   @ApiProperty({ default: 0 })
   @Column('int')
@@ -66,5 +66,5 @@ export class Article {
 
   @JoinColumn({ name: 'tag_id' })
   @ManyToOne(() => Tag, (tag) => tag.articles)
-  tags: Tag[];
+  tag: Tag;
 }

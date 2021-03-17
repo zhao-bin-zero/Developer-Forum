@@ -34,6 +34,6 @@ export class Tag {
   @UpdateDateColumn()
   update_at: Date;
 
-  @OneToMany(() => Article, (article) => article.tags)
+  @OneToMany(() => Article, (article) => article.tag)
   articles: Article[];
 }

@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Article } from 'src/entity/article.entity';
+import { Tag } from 'src/entity/tag.entity';
 import { User } from 'src/entity/user.entity';
 import { ResponseData } from 'src/typings';
 import { Repository } from 'typeorm';
@@ -10,16 +11,22 @@ export class ArticleService {
   constructor(
     @InjectRepository(Article) private articleRepository: Repository<Article>,
     @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Tag) private tagRepository: Repository<Tag>,
   ) {}
   async create(article: Article): Promise<Article> {
     const user = new User();
     user.user_id = article.user_id;
+    const tag = new Tag();
+    tag.tag_id = article.tag_id;
     article.user = user;
+    article.tag = tag;
     try {
       await this.userRepository.save(user);
+      await this.tagRepository.save(tag);
       return await this.articleRepository.save(article);
-    } catch (e) {
-      throw e;
+    } catch (error) {
+      Logger.error(error);
+      return error;
     }
   }
 
@@ -51,7 +58,40 @@ export class ArticleService {
   }
 
   async update(article_id: number, article: Article) {
-    return await this.articleRepository.update(article_id, article);
+    const {
+      title,
+      description,
+      enjoy,
+      view,
+      content,
+      content_html,
+      isPublished,
+      user_id,
+      tag_id,
+    } = article;
+    try {
+      const r = await this.articleRepository.query(
+        `
+        UPDATE article SET title = ?,description=?,enjoy=?,view=?,content=?,content_html=?,isPublished=?,user_id=?,tag_id=?,created_at=Now() WHERE article_id=?; 
+        `,
+        [
+          title,
+          description,
+          enjoy,
+          view,
+          content,
+          content_html,
+          isPublished,
+          user_id,
+          tag_id,
+          article_id,
+        ],
+      );
+      return r;
+    } catch (error) {
+      Logger.error(error);
+      return error;
+    }
   }
 
   async remove(article_id: number): Promise<ResponseData> {

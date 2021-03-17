@@ -70,7 +70,7 @@ export class ArticleController {
     @Body() article: Article,
   ): Promise<ResponseData> {
     const result = await this.articleService.update(+article_id, article);
-    if (result.affected >= 1) {
+    if (result.affectedRows >= 1) {
       return {
         statusCode: 200,
       };
