@@ -12,7 +12,7 @@
     <template #renderItem="{ item }">
       <a-list-item key="item.title">
         <template #actions>
-          <span v-for="{ type, text } in actions" :key="type">
+          <span v-for="{ type, text } in item.actions" :key="type">
             <component v-bind:is="type" style="margin-right: 8px" />
             {{ text }}
           </span>
@@ -26,48 +26,81 @@
         </template>
         <div>
           <a href="#name"
-            ><span>{{ item.name }} </span></a
+            ><span>{{ item.username }} </span></a
           >·<a href="#time"><span>12小时前</span></a
           >·<a href="#type"><span>JavaScript</span></a>
         </div>
         <a-list-item-meta :description="item.description">
           <template #title>
-            <a :href="item.href">{{ item.title }}</a>
+            <a :href="'/article/' + item.article_id">{{ item.title }}</a>
           </template>
-          <template #avatar>{{ item.name }}</template>
         </a-list-item-meta>
       </a-list-item>
     </template>
   </a-list>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import {
   StarOutlined,
   LikeOutlined,
   MessageOutlined,
 } from '@ant-design/icons-vue';
-
-const listData = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: 'https://www.antdv.com/',
-    title: `ant design vue part ${i}`,
-    name: '小明',
+import { defineComponent, onMounted, ref, reactive } from 'vue';
+import { artcileList, artcileCount } from '../api/article';
+async function getList(current, pageSize, listData) {
+  // 获得文章列表
+  const articleData = await artcileList(current, pageSize);
+  articleData.data.forEach((item, index) => {
+    listData.push(item);
+    listData[index].actions = [
+      { type: 'StarOutlined', text: item.view },
+      { type: 'LikeOutlined', text: item.like },
+    ];
   });
 }
 
-const pagination = {
-  onChange: (page) => {
-    console.log(page);
+export default defineComponent({
+  components: {
+    StarOutlined,
+    LikeOutlined,
+    MessageOutlined,
   },
-  pageSize: 3,
-};
+  setup() {
+    // 一页文章最大数
+    const pageSize: number = 2;
+    // 文章数据
+    const listData = reactive<Record<string, string | number>[]>([]);
+    // 文章总数
+    const count = ref<number>(0);
+    const current = ref<number>(1);
 
-const actions = [
-  { type: 'LikeOutlined', text: '156' },
-  { type: 'MessageOutlined', text: '2' },
-];
+    const pagination = reactive({
+      onChange: async (page: number) => {
+        console.log(page);
+        current.value = page;
+        listData.length = 0;
+        await getList(current.value, pageSize, listData);
+      },
+      current: current,
+      pageSize,
+      total: count,
+    });
+
+    onMounted(async () => {
+      // 获得文章总个数
+      count.value = (await artcileCount()).data.count;
+      // 获取文章数据
+      await getList(current.value, pageSize, listData);
+      pagination.total = count.value;
+    });
+
+    return {
+      listData,
+      pagination,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>

@@ -7,7 +7,7 @@ const userApi = {
     Register: '/api/auth/register',
 }
 
-export function login(parameter: any) {
+export function login(parameter: object) {
     return request({
         url: userApi.Login,
         method: 'post',

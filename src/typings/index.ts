@@ -12,3 +12,10 @@ export enum Role {
   User = 'user',
   Admin = 'admin',
 }
+
+export interface ResponseData {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  data?: object;
+  message?: string;
+  statusCode: 200 | 301 | 401 | 404 | 500;
+}

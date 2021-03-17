@@ -20,8 +20,7 @@ const errorHandler = (error: any) => {
       message.error(`Forbidden`);
     }
     if (
-      error.response.status === 401 &&
-      !(data.result && data.result.isLogin)
+      error.response.status === 401 || data.data === 401
     ) {
       message.error(`Unauthorized: Authorization verification failed`);
       if (token) {
@@ -39,8 +38,7 @@ const errorHandler = (error: any) => {
 // request 拦截器
 request.interceptors.request.use(config => {
   const token = localStorage.getItem(ACCESS_TOKEN);
-  // 如果 token 存在
-  // 让每个请求携带自定义 token 请根据实际情况自行修改
+  // 如果 token 存在,让每个请求携带自定义 token
   if (token) {
     config.headers[ACCESS_TOKEN] = token;
     config.headers['Authorization'] = `Bearer ${token}`;
@@ -51,11 +49,10 @@ request.interceptors.request.use(config => {
 // response interceptor
 request.interceptors.response.use(response => {
   const res = response.data;
-  if (res.code !== 200) {
-    message.error(res.error)
+  if (res.statusCode !== 200) {
+    message.error(res.message);
   }
-  return response.data
-
+  return response.data;
 }, errorHandler);
 
 
