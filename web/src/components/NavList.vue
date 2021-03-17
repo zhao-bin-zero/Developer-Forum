@@ -15,12 +15,16 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { defineComponent } from 'vue';
+
+defineComponent({
+  name: 'NavList',
+});
 </script>
 
 <style lang="scss" scoped>
 .nav-list {
-  font-size: .9rem;
+  font-size: 0.9rem;
   max-width: 960px;
   height: 100%;
   margin: auto;

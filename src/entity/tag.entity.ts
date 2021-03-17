@@ -28,11 +28,11 @@ export class Tag {
 
   @ApiProperty()
   @CreateDateColumn()
-  create_at: Date;
+  created_at: Date;
 
   @ApiProperty()
   @UpdateDateColumn()
-  update_at: Date;
+  updated_at: Date;
 
   @OneToMany(() => Article, (article) => article.tag)
   articles: Article[];

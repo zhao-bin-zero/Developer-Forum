@@ -54,7 +54,7 @@ export class Article {
 
   @ApiProperty()
   @UpdateDateColumn()
-  update_at: Date;
+  updated_at: Date;
 
   user_id?: number;
 

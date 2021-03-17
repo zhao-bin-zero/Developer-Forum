@@ -41,17 +41,30 @@
   </nav>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { MessageOutlined } from '@ant-design/icons-vue';
-import Login from '@/components/Login.vue';
-import { ref } from 'vue';
+import Login from '../components/Login.vue';
+import { defineComponent, ref } from 'vue';
 
-const value = ref<string>('');
+export default defineComponent({
+  components:{
+    MessageOutlined,
+    Login
+  },
+  setup() {
+    const value = ref<string>('');
 
-const onSearch = (newValue) => {
-  console.log('use value', newValue);
-  console.log('or use this.value', value);
-};
+    const onSearch = (newValue: string) => {
+      console.log('use value', newValue);
+      console.log('or use this.value', value);
+    };
+
+    return {
+      value,
+      onSearch,
+    }
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -81,7 +94,7 @@ const onSearch = (newValue) => {
 
         a {
           display: inline-block;
-           margin: 0 auto;
+          margin: 0 auto;
         }
 
         &.route-item:hover::after {

@@ -37,7 +37,7 @@ export class User {
 
   @ApiProperty()
   @UpdateDateColumn()
-  updateTime: Date;
+  updated_at: Date;
 
   @JoinColumn()
   @OneToMany(() => Article, (article) => article.user)

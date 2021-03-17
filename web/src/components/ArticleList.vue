@@ -47,19 +47,8 @@ import {
   MessageOutlined,
 } from '@ant-design/icons-vue';
 import { defineComponent, onMounted, ref, reactive } from 'vue';
-import { artcileList, artcileCount } from '../api/article';
-async function getList(current, pageSize, listData) {
-  // 获得文章列表
-  const articleData = await artcileList(current, pageSize);
-  articleData.data.forEach((item, index) => {
-    listData.push(item);
-    listData[index].actions = [
-      { type: 'StarOutlined', text: item.view },
-      { type: 'LikeOutlined', text: item.like },
-    ];
-  });
-}
-
+import { artcileCount, getList } from '../services/article';
+import { ArticleData } from '../types';
 export default defineComponent({
   components: {
     StarOutlined,
@@ -70,7 +59,7 @@ export default defineComponent({
     // 一页文章最大数
     const pageSize: number = 2;
     // 文章数据
-    const listData = reactive<Record<string, string | number>[]>([]);
+    const listData = reactive<ArticleData[]>([]);
     // 文章总数
     const count = ref<number>(0);
     const current = ref<number>(1);
