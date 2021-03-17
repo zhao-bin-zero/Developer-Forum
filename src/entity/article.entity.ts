@@ -3,7 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -61,10 +61,10 @@ export class Article {
   tag_id?: number;
 
   @JoinColumn({ name: 'user_id' })
-  @OneToOne(() => User, (user) => user.articles)
+  @ManyToOne(() => User, (user) => user.articles)
   user: User;
 
   @JoinColumn({ name: 'tag_id' })
-  @OneToOne(() => Tag, (tag) => tag.articles)
+  @ManyToOne(() => Tag, (tag) => tag.articles)
   tags: Tag[];
 }

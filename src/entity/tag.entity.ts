@@ -23,6 +23,10 @@ export class Tag {
   tagname: string;
 
   @ApiProperty()
+  @Column({ type: 'varchar', length: 30, unique: true })
+  nickname: string;
+
+  @ApiProperty()
   @CreateDateColumn()
   create_at: Date;
 

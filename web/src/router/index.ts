@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Layout from '@/views/Layout.vue';
-import store from '../store';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -10,7 +9,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '/',
-        component: () => import('@/views/Home.vue'),
+        component: () => import('@/views/article/Article.vue'),
         meta: { title: '首页', icon: '' },
       },
     ],
