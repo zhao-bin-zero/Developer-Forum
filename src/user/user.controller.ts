@@ -58,7 +58,7 @@ export class UserController {
 
   @Put(':user_id')
   async update(
-    @Param('user_id') user_id: string,
+    @Param('user_id') user_id: number,
     @Body() user: User,
   ): Promise<ResponseData> {
     const result = await this.userService.update(+user_id, user);
@@ -75,7 +75,7 @@ export class UserController {
   }
 
   @Delete(':user_id')
-  async remove(@Param('user_id') user_id: string): Promise<ResponseData> {
+  async remove(@Param('user_id') user_id: number): Promise<ResponseData> {
     return await this.userService.remove(+user_id);
   }
 }

@@ -8,6 +8,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { AppController } from './app.controller';
 import { ArticleModule } from 'src/article/article.module';
+import { TagModule } from 'src/tag/tag.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ArticleModule } from 'src/article/article.module';
     UserMoudle,
     AuthModule,
     ArticleModule,
+    TagModule,
   ],
   controllers: [AppController],
   providers: [
