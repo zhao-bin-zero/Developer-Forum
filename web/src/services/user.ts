@@ -7,6 +7,10 @@ const userApi = {
     Register: '/api/auth/register',
 }
 
+/**
+ * 登录
+ * @param parameter 登录参数
+ */
 export function login(parameter: object) {
     return request({
         url: userApi.Login,
@@ -15,6 +19,10 @@ export function login(parameter: object) {
     })
 }
 
+/**
+ * 退出登录
+ * @param token 认证token
+ */
 export function logout(token: string) {
     return request({
         url: userApi.Logout,
@@ -22,6 +30,10 @@ export function logout(token: string) {
     })
 }
 
+/**
+ * 获取用户信息
+ * @param token 认证token
+ */
 export function getInfo(token: string) {
     return request({
         url: userApi.Profile,
