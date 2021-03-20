@@ -1,10 +1,10 @@
 <template>
   <div class="nav-list">
-    <a href="/tag//frontend">前端</a>
+    <a href="/tag/frontend">前端</a>
     <a href="/tag/backend">后端</a>
     <a href="/tag/android">Android</a>
     <a href="/tag/ios">iOS</a>
-    <a href="/tag/AI">人工智能</a>
+    <a href="/tag/ai">人工智能</a>
     <a href="/tag/freebie">开发工具</a>
     <a href="/tag/career">代码人生</a>
     <a href="/tag/read">阅读</a>
