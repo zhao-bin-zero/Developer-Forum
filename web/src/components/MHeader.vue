@@ -11,10 +11,10 @@
         <router-link to="/">首页</router-link>
       </li>
       <li class="route-item">
-        <router-link to="/">沸点</router-link>
+        <router-link to="/pins">沸点</router-link>
       </li>
       <li class="route-item">
-        <router-link to="/">小册</router-link>
+        <router-link to="/books">小册</router-link>
       </li>
       <li class="route-item">
         <router-link to="/events">活动</router-link>

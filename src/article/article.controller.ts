@@ -54,6 +54,32 @@ export class ArticleController {
     };
   }
 
+  @Get('tagcount')
+  async tagCount(@Query('tagname') tagname: string): Promise<ResponseData> {
+    return {
+      statusCode: 200,
+      data: {
+        count: (await this.articleService.tagCount(tagname))[0].count,
+      },
+    };
+  }
+
+  @Get('tag/:tagname')
+  async listByTagname(
+    @Param('tagname') tagname,
+    @Query('currentPage') currentPage = 1,
+    @Query('onePageAmount') onePageAmount = 8,
+  ): Promise<ResponseData> {
+    return {
+      statusCode: 200,
+      data: await this.articleService.listByTagname(
+        tagname,
+        currentPage,
+        onePageAmount,
+      ),
+    };
+  }
+
   @Get(':article_id')
   async findOne(
     @Param('article_id') article_id: string,

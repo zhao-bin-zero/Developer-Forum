@@ -45,3 +45,11 @@ export type Tag = {
     created_at?: Date;
     updated_at?: Date;
 }
+
+export interface ResponseData {
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    data?: object;
+    message?: string;
+    statusCode: 200 | 301 | 401 | 404 | 500;
+  }
+  

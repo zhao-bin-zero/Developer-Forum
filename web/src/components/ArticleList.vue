@@ -47,8 +47,10 @@ import {
   MessageOutlined,
 } from '@ant-design/icons-vue';
 import { defineComponent, onMounted, ref, reactive } from 'vue';
-import { artcileCount, getList } from '../services/article';
+import { artcileCount, getList, artcileCountByName } from '../services/article';
 import { ArticleData } from '../types';
+import { useRoute } from 'vue-router';
+
 export default defineComponent({
   components: {
     StarOutlined,
@@ -64,12 +66,15 @@ export default defineComponent({
     const count = ref<number>(0);
     const current = ref<number>(1);
 
+    const route = useRoute();
+    const tagname: any = route.params.tagname;
+
     const pagination = reactive({
       onChange: async (page: number) => {
         console.log(page);
         current.value = page;
         listData.length = 0;
-        await getList(current.value, pageSize, listData);
+        await getList(current.value, pageSize, listData, tagname);
       },
       current: current,
       pageSize,
@@ -78,9 +83,13 @@ export default defineComponent({
 
     onMounted(async () => {
       // 获得文章总个数
-      count.value = (await artcileCount()).data.count;
+      if (tagname) {
+        count.value = (await artcileCountByName(tagname)).data.count;
+      } else {
+        count.value = (await artcileCount()).data.count;
+      }
       // 获取文章数据
-      await getList(current.value, pageSize, listData);
+      await getList(current.value, pageSize, listData, tagname);
       pagination.total = count.value;
     });
 

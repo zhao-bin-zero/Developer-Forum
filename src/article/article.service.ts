@@ -57,6 +57,24 @@ export class ArticleService {
     return await this.articleRepository.count();
   }
 
+  async tagCount(tagname: string) {
+    return await this.articleRepository.query(
+      `SELECT count(*) count FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id AND t.tagname=?`,
+      [tagname],
+    );
+  }
+
+  async listByTagname(
+    tagname: string,
+    currentPage: number,
+    onePageAmount: number,
+  ) {
+    return await this.articleRepository.query(
+      `SELECT u.username,a.*,t.tagname FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id AND t.tagname=? LIMIT ?,?`,
+      [tagname, (currentPage - 1) * onePageAmount, currentPage * onePageAmount],
+    );
+  }
+
   async update(article_id: number, article: Article) {
     const {
       title,

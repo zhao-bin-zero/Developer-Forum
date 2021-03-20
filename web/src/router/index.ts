@@ -12,6 +12,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/article/Article.vue'),
         meta: { title: '首页', icon: '' },
       },
+      {
+        path: '/tag/:tagname',
+        component: () => import('@/views/article/Article.vue'),
+        meta: { title: '分类文章', icon: '' },
+      },
     ],
   }
 ];
