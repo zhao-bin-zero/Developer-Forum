@@ -96,13 +96,15 @@ export default defineComponent({
      * 发布沸点事件
      */
     const handleMenuClick = (e: Event) => {
-      router.push('/editor');
+      visible.value = true;
     };
 
     /**
      * 模态框提交事件
      */
-    const handleOk = (e: Event) => {};
+    const handleOk = (e: Event) => {
+      visible.value = false;
+    };
 
     return {
       value,
