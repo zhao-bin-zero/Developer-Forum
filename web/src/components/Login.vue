@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <a-button v-if="!isLogin" type="primary" @click="showModal">
+    <a-button v-if="!isLogin" type="primary" size="small" @click="showModal">
       登录
     </a-button>
     <div v-if="isLogin">

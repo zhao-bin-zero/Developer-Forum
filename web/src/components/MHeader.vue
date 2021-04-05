@@ -34,35 +34,84 @@
           </a>
         </li>
         <li>
+          <a-dropdown-button @click="handleButtonClick">
+            写文章
+            <template #overlay>
+              <a-menu @click="handleMenuClick">
+                <a-menu-item key="1">
+                  <UserOutlined />
+                  发布沸点
+                </a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown-button>
+        </li>
+        <li>
           <login />
         </li>
       </div>
     </ul>
   </nav>
+  <teleport to="body">
+    <a-modal v-model:visible="visible" title="Basic Modal" @ok="handleOk">
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </a-modal>
+  </teleport>
 </template>
 
 <script lang="ts">
 import { MessageOutlined } from '@ant-design/icons-vue';
 import Login from '../components/Login.vue';
 import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
-  components:{
+  components: {
     MessageOutlined,
-    Login
+    Login,
   },
   setup() {
+    const router = useRouter();
     const value = ref<string>('');
+    const visible = ref<boolean>(false);
 
+    /**
+     * 搜索事件
+     */
     const onSearch = (newValue: string) => {
       console.log('use value', newValue);
       console.log('or use this.value', value);
     };
 
+    /**
+     * 发布文章事件
+     */
+    const handleButtonClick = (e: Event) => {
+      router.push('/editor');
+    };
+
+    /**
+     * 发布沸点事件
+     */
+    const handleMenuClick = (e: Event) => {
+      router.push('/editor');
+    };
+
+    /**
+     * 模态框提交事件
+     */
+    const handleOk = (e: Event) => {};
+
     return {
       value,
+      visible,
       onSearch,
-    }
+      handleButtonClick,
+      handleMenuClick,
+      handleOk,
+    };
   },
 });
 </script>
@@ -86,7 +135,7 @@ export default defineComponent({
       padding: 0;
       li {
         position: relative;
-        padding: 0 1.4rem;
+        padding: 0 0.8rem;
 
         &:first {
           padding-right: 0;
