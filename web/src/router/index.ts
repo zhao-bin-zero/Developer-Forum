@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/editor',
         component: () => import('@/views/editor/Editor.vue'),
         meta: { title: '新建文章', icon: '' },
-      }
+      },
     ],
   }
 ];

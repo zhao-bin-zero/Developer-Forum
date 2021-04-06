@@ -39,8 +39,7 @@
             <template #overlay>
               <a-menu @click="handleMenuClick">
                 <a-menu-item key="1">
-                  <UserOutlined />
-                  发布沸点
+                  <UserOutlined />发布沸点
                 </a-menu-item>
               </a-menu>
             </template>
@@ -129,7 +128,7 @@ export default defineComponent({
     }
     .right::after {
       display: inline-block;
-      content: '';
+      content: "";
       clear: both;
     }
     ul {
@@ -149,7 +148,7 @@ export default defineComponent({
         }
 
         &.route-item:hover::after {
-          content: '';
+          content: "";
           width: 100%;
           position: absolute;
           bottom: 0;
