@@ -22,6 +22,21 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/editor/Editor.vue'),
         meta: { title: '新建文章', icon: '' },
       },
+      {
+        path: '/pins',
+        component: () => import('@/views/pins/Pins.vue'),
+        meta: { title: '沸点', icon: '' },
+      },
+      {
+        path: '/events',
+        component: () => import('@/views/events/Events.vue'),
+        meta: { title: '活动', icon: '' },
+      },
+      {
+        path: '/books',
+        component: () => import('@/views/books/Books.vue'),
+        meta: { title: '小册', icon: '' },
+      },
     ],
   }
 ];
