@@ -24,17 +24,17 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: '/pins',
-        component: () => import('@/views/pins/Pins.vue'),
+        component: () => import('@/views/pin/Pin.vue'),
         meta: { title: '沸点', icon: '' },
       },
       {
         path: '/events',
-        component: () => import('@/views/events/Events.vue'),
+        component: () => import('@/views/event/Event.vue'),
         meta: { title: '活动', icon: '' },
       },
       {
         path: '/books',
-        component: () => import('@/views/books/Books.vue'),
+        component: () => import('@/views/book/Book.vue'),
         meta: { title: '小册', icon: '' },
       },
     ],

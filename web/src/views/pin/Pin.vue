@@ -32,7 +32,7 @@ import { defineComponent } from 'vue';
 import moment from 'moment';
 
 export default defineComponent({
-    name: 'Pins',
+    name: 'Pin',
     setup() {
         return {
             data: [
