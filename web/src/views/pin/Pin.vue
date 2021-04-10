@@ -1,6 +1,6 @@
 <template>
     <div id="pins">
-        评论列表
+        <h1>沸点列表</h1>
         <a-list
             class="comment-list"
             :header="`${comments.length} replies`"
@@ -42,7 +42,7 @@
                         :loading="submitting"
                         type="primary"
                         @click="handleSubmit"
-                    >Add Comment</a-button>
+                    >添加沸点</a-button>
                 </a-form-item>
             </template>
         </a-comment>
@@ -56,14 +56,14 @@ import moment from 'moment';
 export default defineComponent({
     name: 'Pin',
     setup() {
-        const comments = ref<any[]>([]);
+        const comments = ref<any[]>([]); // 评论列表
         const submitting = ref<boolean>(false);
         const value = ref<string>('');
 
         const data = [
             {
                 actions: ['回复'],
-                author: 'Han Solo',
+                author: 'admin1',
                 avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
                 content:
                     'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
@@ -71,7 +71,7 @@ export default defineComponent({
             },
             {
                 actions: ['回复'],
-                author: 'Han Solo',
+                author: 'admin1',
                 avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
                 content:
                     'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
@@ -91,7 +91,7 @@ export default defineComponent({
             setTimeout(() => {
                 submitting.value = false;
                 comments.value.push({
-                    author: 'Han Solo',
+                    author: 'admin1',
                     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
                     content: value.value,
                     datetime: moment().subtract(2, 'days'),
@@ -105,7 +105,6 @@ export default defineComponent({
             comments,
             submitting,
             value,
-
             moment,
             handleSubmit,
         };
