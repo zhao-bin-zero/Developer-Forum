@@ -23,13 +23,17 @@ export class Tag {
   tagname: string;
 
   @ApiProperty()
+  @Column({ type: 'varchar', length: 30, unique: true })
+  nickname: string;
+
+  @ApiProperty()
   @CreateDateColumn()
-  create_at: Date;
+  created_at: Date;
 
   @ApiProperty()
   @UpdateDateColumn()
-  update_at: Date;
+  updated_at: Date;
 
-  @OneToMany(() => Article, (article) => article.tags)
+  @OneToMany(() => Article, (article) => article.tag)
   articles: Article[];
 }

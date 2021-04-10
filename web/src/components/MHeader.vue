@@ -11,10 +11,10 @@
         <router-link to="/">首页</router-link>
       </li>
       <li class="route-item">
-        <router-link to="/">沸点</router-link>
+        <router-link to="/pins">沸点</router-link>
       </li>
       <li class="route-item">
-        <router-link to="/">小册</router-link>
+        <router-link to="/books">小册</router-link>
       </li>
       <li class="route-item">
         <router-link to="/events">活动</router-link>
@@ -34,24 +34,87 @@
           </a>
         </li>
         <li>
+          <a-dropdown-button @click="handleButtonClick">
+            写文章
+            <template #overlay>
+              <a-menu @click="handleMenuClick">
+                <a-menu-item key="1">
+                  <UserOutlined />发布沸点
+                </a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown-button>
+        </li>
+        <li>
           <login />
         </li>
       </div>
     </ul>
   </nav>
+  <teleport to="body">
+    <a-modal v-model:visible="visible" title="Basic Modal" @ok="handleOk">
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </a-modal>
+  </teleport>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { MessageOutlined } from '@ant-design/icons-vue';
-import Login from '@/components/Login.vue';
-import { ref } from 'vue';
+import Login from '../components/Login.vue';
+import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-const value = ref<string>('');
+export default defineComponent({
+  components: {
+    MessageOutlined,
+    Login,
+  },
+  setup() {
+    const router = useRouter();
+    const value = ref<string>('');
+    const visible = ref<boolean>(false);
 
-const onSearch = (newValue) => {
-  console.log('use value', newValue);
-  console.log('or use this.value', value);
-};
+    /**
+     * 搜索事件
+     */
+    const onSearch = (newValue: string) => {
+      console.log('use value', newValue);
+      console.log('or use this.value', value);
+    };
+
+    /**
+     * 发布文章事件
+     */
+    const handleButtonClick = (e: Event) => {
+      router.push('/editor');
+    };
+
+    /**
+     * 发布沸点事件
+     */
+    const handleMenuClick = (e: Event) => {
+      visible.value = true;
+    };
+
+    /**
+     * 模态框提交事件
+     */
+    const handleOk = (e: Event) => {
+      visible.value = false;
+    };
+
+    return {
+      value,
+      visible,
+      onSearch,
+      handleButtonClick,
+      handleMenuClick,
+      handleOk,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -65,7 +128,7 @@ const onSearch = (newValue) => {
     }
     .right::after {
       display: inline-block;
-      content: '';
+      content: "";
       clear: both;
     }
     ul {
@@ -73,7 +136,7 @@ const onSearch = (newValue) => {
       padding: 0;
       li {
         position: relative;
-        padding: 0 1.4rem;
+        padding: 0 0.8rem;
 
         &:first {
           padding-right: 0;
@@ -81,11 +144,11 @@ const onSearch = (newValue) => {
 
         a {
           display: inline-block;
-           margin: 0 auto;
+          margin: 0 auto;
         }
 
         &.route-item:hover::after {
-          content: '';
+          content: "";
           width: 100%;
           position: absolute;
           bottom: 0;

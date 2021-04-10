@@ -1,5 +1,5 @@
 import { createStore } from "vuex"
-import { getInfo, login, logout } from "../api/user"
+import { getInfo, login, logout } from "../services/user"
 import { ACCESS_TOKEN } from "./mutation-types"
 import message from 'ant-design-vue/es/message'
 

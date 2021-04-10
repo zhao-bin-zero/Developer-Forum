@@ -7,8 +7,11 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
   JoinColumn,
+  ManyToMany,
 } from 'typeorm';
 import { Article } from './article.entity';
+import { Event } from './event.entity';
+import { Pin } from './pin.entity';
 
 /**
  * 用户存储类
@@ -37,9 +40,17 @@ export class User {
 
   @ApiProperty()
   @UpdateDateColumn()
-  updateTime: Date;
+  updated_at: Date;
 
   @JoinColumn()
   @OneToMany(() => Article, (article) => article.user)
   articles: Article[];
+
+  @JoinColumn()
+  @OneToMany(() => Pin, (pin) => pin.user)
+  pins: Pin[];
+
+  @JoinColumn()
+  @ManyToMany(() => Event, (event) => event.users)
+  events: Event[];
 }

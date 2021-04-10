@@ -32,7 +32,7 @@ export class Permission {
 
   @ApiProperty()
   @UpdateDateColumn()
-  updateTime: Date;
+  update_at: Date;
 
   @ManyToMany(() => Role, (role) => role.permissions)
   roles: Role[];

@@ -3,7 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -30,7 +30,7 @@ export class Article {
 
   @ApiProperty({ default: 0 })
   @Column('int')
-  like: number;
+  enjoy: number;
 
   @ApiProperty({ default: 0 })
   @Column('int')
@@ -54,17 +54,17 @@ export class Article {
 
   @ApiProperty()
   @UpdateDateColumn()
-  update_at: Date;
+  updated_at: Date;
 
   user_id?: number;
 
   tag_id?: number;
 
   @JoinColumn({ name: 'user_id' })
-  @OneToOne(() => User, (user) => user.articles)
+  @ManyToOne(() => User, (user) => user.articles)
   user: User;
 
   @JoinColumn({ name: 'tag_id' })
-  @OneToOne(() => Tag, (tag) => tag.articles)
-  tags: Tag[];
+  @ManyToOne(() => Tag, (tag) => tag.articles)
+  tag: Tag;
 }

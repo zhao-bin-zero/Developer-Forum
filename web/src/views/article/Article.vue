@@ -6,6 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import NavList from '@/components/NavList.vue';
-import ArticleList from '@/components/ArticleList.vue';
+import NavList from '../../components/NavList.vue';
+import ArticleList from '../../components/ArticleList.vue';
 </script>
