@@ -34,16 +34,7 @@
           </a>
         </li>
         <li>
-          <a-dropdown-button @click="handleButtonClick">
-            写文章
-            <template #overlay>
-              <a-menu @click="handleMenuClick">
-                <a-menu-item key="1">
-                  <UserOutlined />发布沸点
-                </a-menu-item>
-              </a-menu>
-            </template>
-          </a-dropdown-button>
+          <a-button @click="handleButtonClick">写文章</a-button>
         </li>
         <li>
           <login />
@@ -51,13 +42,6 @@
       </div>
     </ul>
   </nav>
-  <teleport to="body">
-    <a-modal v-model:visible="visible" title="Basic Modal" @ok="handleOk">
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-    </a-modal>
-  </teleport>
 </template>
 
 <script lang="ts">
@@ -92,13 +76,6 @@ export default defineComponent({
     };
 
     /**
-     * 发布沸点事件
-     */
-    const handleMenuClick = (e: Event) => {
-      visible.value = true;
-    };
-
-    /**
      * 模态框提交事件
      */
     const handleOk = (e: Event) => {
@@ -110,7 +87,6 @@ export default defineComponent({
       visible,
       onSearch,
       handleButtonClick,
-      handleMenuClick,
       handleOk,
     };
   },

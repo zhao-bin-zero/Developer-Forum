@@ -1,8 +1,6 @@
 <template>
   <div class="login">
-    <a-button v-if="!isLogin" type="primary" size="small" @click="showModal">
-      登录
-    </a-button>
+    <a-button v-if="!isLogin" type="primary" @click="showModal">登录</a-button>
     <div v-if="isLogin">
       <a-dropdown>
         <a class="ant-dropdown-link" @click.prevent>
@@ -35,11 +33,7 @@
           <a-input v-model:value="form.username" />
         </a-form-item>
         <a-form-item ref="password" required label="password" name="password">
-          <a-input
-            v-model:value="form.password"
-            type="password"
-            autocomplete="off"
-          />
+          <a-input v-model:value="form.password" type="password" autocomplete="off" />
         </a-form-item>
       </a-form>
     </a-modal>

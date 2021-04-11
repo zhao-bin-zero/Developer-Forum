@@ -9,6 +9,8 @@ import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { AppController } from './app.controller';
 import { ArticleModule } from 'src/article/article.module';
 import { TagModule } from 'src/tag/tag.module';
+import { PinModule } from 'src/pin/pin.module';
+import { EventModule } from 'src/event/event.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { TagModule } from 'src/tag/tag.module';
     AuthModule,
     ArticleModule,
     TagModule,
+    PinModule,
+    EventModule,
   ],
   controllers: [AppController],
   providers: [
