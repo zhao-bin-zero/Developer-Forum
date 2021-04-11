@@ -24,6 +24,8 @@ export class Pin {
   @Column({ type: 'int', default: 0 })
   reply_user_id: number;
 
+  user_id?: number;
+
   @ApiProperty()
   @UpdateDateColumn()
   updated_at: Date;

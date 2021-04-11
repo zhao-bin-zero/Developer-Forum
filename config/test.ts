@@ -14,8 +14,8 @@ export default {
     timezone: 'UTC',
     charset: 'utf8mb4',
     entities: ['./**/*.entity.js'],
-    synchronize: true,
-    logging: true,
+    synchronize: false,
+    logging: false,
   },
   jwtConstants: {
     secret: 'secret',

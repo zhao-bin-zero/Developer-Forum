@@ -28,6 +28,8 @@ export class Event {
   @Column({ type: 'timestamp' })
   end_time: Date;
 
+  user_id?: number;
+
   @ApiProperty()
   @UpdateDateColumn()
   updated_at: Date;
