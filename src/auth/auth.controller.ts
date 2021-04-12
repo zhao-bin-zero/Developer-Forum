@@ -1,12 +1,13 @@
 import { Controller, Logger, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ResponseData } from 'src/typings';
 import { AuthService } from './auth.service';
 
 /**
  * 认证控制器
  */
+@ApiBearerAuth()
 @ApiTags('授权，认证')
 @Controller('api/auth')
 export class AuthController {

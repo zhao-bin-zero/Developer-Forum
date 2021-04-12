@@ -35,9 +35,7 @@ export class ArticleService {
     onePageAmount: number,
   ): Promise<Article[]> {
     const a = await this.articleRepository.query(
-      `
-      SELECT u.user_id, u.username,a.* FROM user u,article a WHERE u.user_id=a.user_id LIMIT ?,?
-    `,
+      `SELECT u.user_id, u.username,a.* FROM user u,article a WHERE u.user_id=a.user_id LIMIT ?,?`,
       [(currentPage - 1) * onePageAmount, currentPage * onePageAmount],
     );
     return a;
@@ -45,9 +43,7 @@ export class ArticleService {
 
   async findOne(article_id: number) {
     const r = await this.articleRepository.query(
-      `
-      SELECT u.user_id, u.username,a.* FROM user u,article a WHERE u.user_id=a.user_id AND article_id=?
-    `,
+      `SELECT u.user_id, u.username,a.* FROM user u,article a WHERE u.user_id=a.user_id AND article_id=?`,
       [article_id],
     );
     return r[0];
@@ -89,9 +85,7 @@ export class ArticleService {
     } = article;
     try {
       const r = await this.articleRepository.query(
-        `
-        UPDATE article SET title = ?,description=?,enjoy=?,view=?,content=?,content_html=?,isPublished=?,user_id=?,tag_id=?,created_at=Now() WHERE article_id=?; 
-        `,
+        `UPDATE article SET title = ?,description=?,enjoy=?,view=?,content=?,content_html=?,isPublished=?,user_id=?,tag_id=?,created_at=Now() WHERE article_id=?`,
         [
           title,
           description,

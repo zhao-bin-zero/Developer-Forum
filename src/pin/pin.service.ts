@@ -26,9 +26,7 @@ export class PinService {
 
   async findPaging(currentPage: number, onePageAmount: number): Promise<Pin[]> {
     const r = await this.pinRepository.query(
-      `
-      SELECT u.user_id, u.username,p.* FROM user u,pin p WHERE u.user_id=p.user_id LIMIT ?,?
-    `,
+      `SELECT u.user_id, u.username,p.* FROM user u,pin p WHERE u.user_id=p.user_id LIMIT ?,?`,
       [(currentPage - 1) * onePageAmount, currentPage * onePageAmount],
     );
     return r;
@@ -36,9 +34,7 @@ export class PinService {
 
   async findOne(pin_id: number) {
     const r = await this.pinRepository.query(
-      `
-      SELECT u.user_id, u.username,p.* FROM user u,pin p WHERE u.user_id=p.user_id AND pin_id=?
-    `,
+      `SELECT u.user_id, u.username,p.* FROM user u,pin p WHERE u.user_id=p.user_id AND pin_id=?`,
       [pin_id],
     );
     return r[0];
@@ -50,7 +46,11 @@ export class PinService {
 
   async update(pin_id: number, pin: Pin) {
     try {
-      const r = await this.pinRepository.update(pin_id, pin);
+      const { user_id, message, reply_user_id } = pin;
+      const r = await this.pinRepository.query(
+        `UPDATE pin SET user_id=?,message=?, reply_user_id=?,updated_at=Now() WHERE pin_id=?`,
+        [user_id, message, reply_user_id, pin_id],
+      );
       return r;
     } catch (error) {
       Logger.error(error);

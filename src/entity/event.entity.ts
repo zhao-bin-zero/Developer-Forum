@@ -5,7 +5,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from './user.entity';
@@ -13,7 +13,7 @@ import { User } from './user.entity';
 @Entity()
 export class Event {
   @ApiProperty()
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   event_id: number;
 
   @ApiProperty()

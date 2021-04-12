@@ -5,7 +5,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from './user.entity';
@@ -13,7 +13,7 @@ import { User } from './user.entity';
 @Entity()
 export class Pin {
   @ApiProperty()
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   pin_id: number;
 
   @ApiProperty()
@@ -24,6 +24,7 @@ export class Pin {
   @Column({ type: 'int', default: 0 })
   reply_user_id: number;
 
+  @ApiProperty()
   user_id?: number;
 
   @ApiProperty()

@@ -56,8 +56,10 @@ export class Article {
   @UpdateDateColumn()
   updated_at: Date;
 
+  @ApiProperty()
   user_id?: number;
 
+  @ApiProperty()
   tag_id?: number;
 
   @JoinColumn({ name: 'user_id' })
