@@ -21,6 +21,7 @@ export class EventController {
   @Post('')
   async create(@Body() event: Event): Promise<ResponseData> {
     const result = await this.eventService.create(event);
+    console.log(result);
     if (result == undefined) {
       return {
         statusCode: 500,
@@ -68,7 +69,7 @@ export class EventController {
     @Body() event: Event,
   ): Promise<ResponseData> {
     const result = await this.eventService.update(+event_id, event);
-    if (result.affectedRows >= 1) {
+    if (result == 1) {
       return {
         statusCode: 200,
       };

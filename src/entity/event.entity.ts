@@ -14,7 +14,7 @@ import { User } from './user.entity';
 export class Event {
   @ApiProperty()
   @PrimaryGeneratedColumn()
-  event_id: number;
+  event_id?: number;
 
   @ApiProperty()
   @Column({ type: 'varchar' })
@@ -25,9 +25,18 @@ export class Event {
   start_time: Date;
 
   @ApiProperty()
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', default: () => null, nullable: true })
   end_time: Date;
 
+  @ApiProperty()
+  @Column({ type: 'varchar', length: 200 })
+  event_url: string;
+
+  @ApiProperty()
+  @Column({ type: 'varchar', length: 200 })
+  img_url: string;
+
+  @ApiProperty()
   user_id?: number;
 
   @ApiProperty()
@@ -38,7 +47,15 @@ export class Event {
   @CreateDateColumn()
   created_at: Date;
 
-  @JoinTable({ name: 'events_users' })
+  @JoinTable({
+    name: 'events_users',
+    joinColumn: {
+      name: 'event_id',
+    },
+    inverseJoinColumn: {
+      name: 'user_id',
+    },
+  })
   @ManyToMany(() => User, (user) => user.events)
   users: User[];
 }
