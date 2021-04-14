@@ -1,6 +1,6 @@
 import { AxiosPromise } from 'axios';
 import request from '../utils/request';
-import { ArticleData } from '../types';
+import { ArticleData,Article } from '../types';
 
 const articleApi = {
     List: '/api/article',
@@ -73,6 +73,17 @@ export function artcileCountByName(tagname: any): AxiosPromise<any> {
     return request({
         url: `${articleApi.CountByTag}${tagname}`,
         method: 'GET',
+    })
+}
+
+/**
+ * 添加新的文章
+ */
+ export function artcileAdd(articleData: Article): AxiosPromise<any> {
+    return request({
+        url: articleApi.List,
+        method: 'POST',
+        data: articleData,
     })
 }
 
