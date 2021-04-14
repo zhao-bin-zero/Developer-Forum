@@ -1,11 +1,10 @@
 <template>
     <div id="pins">
-        <h1>沸点列表</h1>
         <a-list
             class="comment-list"
-            :header="`${comments.length} replies`"
+            :header="`沸点列表:${pinData.length} replies`"
             item-layout="horizontal"
-            :data-source="comments"
+            :data-source="pinData"
         >
             <template #renderItem="{ item }">
                 <a-list-item>
@@ -50,36 +49,39 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onBeforeMount, reactive, ref } from 'vue';
 import moment from 'moment';
+import { PinData } from '../../types';
+import { pinAdd, pinList } from '../../services/pin';
+import { useStore } from 'vuex';
+
+type ListData = {
+    author: string | undefined;
+    avatar: string | undefined;
+    content: string | undefined;
+    datetime: Date | moment.Moment;
+}
 
 export default defineComponent({
     name: 'Pin',
     setup() {
-        const comments = ref<any[]>([]); // 评论列表
         const submitting = ref<boolean>(false);
         const value = ref<string>('');
+        const pinData = reactive<ListData[]>([])
+        const store = useStore();
 
-        const data = [
-            {
-                actions: ['回复'],
-                author: 'admin1',
-                avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-                content:
-                    'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-                datetime: moment().subtract(1, 'days'),
-            },
-            {
-                actions: ['回复'],
-                author: 'admin1',
-                avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-                content:
-                    'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-                datetime: moment().subtract(2, 'days'),
-            },
-        ];
-
-        comments.value.push(...data);
+        onBeforeMount(async () => {
+            await pinList(-1, -1).then(r => {
+                r.data.forEach(item => {
+                    pinData.push({
+                        author: item.username,
+                        avatar: item.avatar,
+                        content: item.content,
+                        datetime: moment(item.created_at).subtract(2, 'days'),
+                    })
+                })
+            })
+        })
 
         const handleSubmit = () => {
             if (!value.value) {
@@ -90,19 +92,22 @@ export default defineComponent({
 
             setTimeout(() => {
                 submitting.value = false;
-                comments.value.push({
+                pinAdd({
+                    user_id: localStorage.getItem('user_id'),
+                    content: value.value,
+                })
+                pinData.push({
                     author: 'admin1',
                     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
                     content: value.value,
                     datetime: moment().subtract(2, 'days'),
                 });
                 value.value = '';
-                console.log(comments.value);
             }, 1000);
         };
 
         return {
-            comments,
+            pinData,
             submitting,
             value,
             moment,

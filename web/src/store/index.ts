@@ -9,6 +9,7 @@ export default createStore({
         username: '',
         avatar: '',
         roles: [],
+        user_id: 0,
     },
     mutations: {
         SET_TOKEN: (state, token: string) => {
@@ -22,6 +23,9 @@ export default createStore({
         },
         SET_ROLES: (state, roles) => {
             state.roles = roles
+        },
+        SET_ID: (state, user_id:number) => {
+            state.user_id = user_id
         },
     },
     actions: {
@@ -47,6 +51,8 @@ export default createStore({
                     commit('SET_NAME', result.username)
                     localStorage.setItem('username', result.username);
                     commit('SET_AVATAR', result.avatar)
+                    localStorage.setItem('user_id', result.user_id);
+                    commit('SET_ID', result.user_id)
                     resolve(r)
                 }).catch(error => {
                     message.error('登录失败');
@@ -60,8 +66,10 @@ export default createStore({
                 logout(state.token).then(() => {
                     commit('SET_TOKEN', '')
                     commit('SET_ROLES', [])
+                    commit('SET_ID', 0)
                     localStorage.removeItem(ACCESS_TOKEN)
                     localStorage.removeItem('username');
+                    localStorage.removeItem('user_id');
                     resolve()
                 }).catch(() => {
                     message.error('登录失败');
@@ -75,5 +83,6 @@ export default createStore({
         token: state => state.token,
         avatar: state => state.avatar,
         username: state => state.username,
+        user_id: state=>state.user_id,
     },
 })

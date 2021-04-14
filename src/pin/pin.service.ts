@@ -11,13 +11,14 @@ export class PinService {
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Pin) private pinRepository: Repository<Pin>,
   ) {}
-  async create(pin: Pin): Promise<Pin> {
-    const user = new User();
-    user.user_id = pin.user_id;
-    pin.user = user;
+  async create(pin: Pin): Promise<any> {
     try {
-      await this.userRepository.save(user);
-      return await this.pinRepository.save(pin);
+      const { user_id, content } = pin;
+      const r = await this.pinRepository.query(
+        `INSERT INTO pin (user_id, content) VALUES (?,?)`,
+        [user_id, content],
+      );
+      return r;
     } catch (error) {
       Logger.error(error);
       return error;
@@ -25,16 +26,22 @@ export class PinService {
   }
 
   async findPaging(currentPage: number, onePageAmount: number): Promise<Pin[]> {
-    const r = await this.pinRepository.query(
-      `SELECT u.user_id, u.username,p.* FROM user u,pin p WHERE u.user_id=p.user_id LIMIT ?,?`,
-      [(currentPage - 1) * onePageAmount, currentPage * onePageAmount],
-    );
+    let sql = ``;
+    if (currentPage == -1 && onePageAmount == -1) {
+      sql = `SELECT u.user_id, u.username,u.avatar,p.* FROM user u,pin p WHERE u.user_id=p.user_id`;
+    } else {
+      sql = `SELECT u.user_id, u.username,u.avatar,p.* FROM user u,pin p WHERE u.user_id=p.user_id LIMIT ?,?`;
+    }
+    const r = await this.pinRepository.query(sql, [
+      (currentPage - 1) * onePageAmount,
+      currentPage * onePageAmount,
+    ]);
     return r;
   }
 
   async findOne(pin_id: number) {
     const r = await this.pinRepository.query(
-      `SELECT u.user_id, u.username,p.* FROM user u,pin p WHERE u.user_id=p.user_id AND pin_id=?`,
+      `SELECT u.user_id, u.username,u.avatar,p.* FROM user u,pin p WHERE u.user_id=p.user_id AND pin_id=?`,
       [pin_id],
     );
     return r[0];
@@ -46,10 +53,10 @@ export class PinService {
 
   async update(pin_id: number, pin: Pin) {
     try {
-      const { user_id, message, reply_user_id } = pin;
+      const { user_id, content, reply_user_id } = pin;
       const r = await this.pinRepository.query(
-        `UPDATE pin SET user_id=?,message=?, reply_user_id=?,updated_at=Now() WHERE pin_id=?`,
-        [user_id, message, reply_user_id, pin_id],
+        `UPDATE pin SET user_id=?,content=?, reply_user_id=?,updated_at=Now() WHERE pin_id=?`,
+        [user_id, content, reply_user_id, pin_id],
       );
       return r;
     } catch (error) {

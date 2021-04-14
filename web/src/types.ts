@@ -1,4 +1,14 @@
 /**
+ * 后端返回数据
+ */
+ export interface ResponseData {
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    data?: object;
+    message?: string;
+    statusCode: 200 | 301 | 401 | 404 | 500;
+}
+
+/**
  * 文章数据
  */
 export type Article = {
@@ -46,10 +56,16 @@ export type Tag = {
     updated_at?: Date;
 }
 
-export interface ResponseData {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    data?: object;
-    message?: string;
-    statusCode: 200 | 301 | 401 | 404 | 500;
-  }
-  
+/**
+ * 沸点数据
+ */
+export type PinData = {
+    user_id?:number;
+    username?:string;
+    avatar?:string;
+    pin_id?: number;
+    content?: string;
+    reply_user_id?: number;
+    updated_at?: Date;
+    created_at?: Date;
+};

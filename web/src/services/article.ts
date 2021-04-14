@@ -75,3 +75,13 @@ export function artcileCountByName(tagname: any): AxiosPromise<any> {
         method: 'GET',
     })
 }
+
+/**
+ * 删除文章
+ */
+ export function artcileDelete(artcile_id: number): AxiosPromise<any> {
+    return request({
+        url: `${articleApi.List}/${artcile_id}`,
+        method: 'DELETE',
+    })
+}

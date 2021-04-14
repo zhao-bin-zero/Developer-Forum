@@ -34,10 +34,16 @@ export class ArticleService {
     currentPage: number,
     onePageAmount: number,
   ): Promise<Article[]> {
-    const a = await this.articleRepository.query(
-      `SELECT u.user_id, u.username,a.* FROM user u,article a WHERE u.user_id=a.user_id LIMIT ?,?`,
-      [(currentPage - 1) * onePageAmount, currentPage * onePageAmount],
-    );
+    let sql = ``;
+    if (currentPage == -1 && onePageAmount == -1) {
+      sql = `SELECT u.user_id, u.username,a.* FROM user u,article a WHERE u.user_id=a.user_id`;
+    } else {
+      sql = `SELECT u.user_id, u.username,a.* FROM user u,article a WHERE u.user_id=a.user_id LIMIT ?,?`;
+    }
+    const a = await this.articleRepository.query(sql, [
+      (currentPage - 1) * onePageAmount,
+      currentPage * onePageAmount,
+    ]);
     return a;
   }
 

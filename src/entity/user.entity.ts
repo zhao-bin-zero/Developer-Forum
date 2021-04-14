@@ -31,7 +31,11 @@ export class User {
   password: string;
 
   @ApiProperty()
-  @Column({ type: 'varchar', length: 200, default: '' })
+  @Column({
+    type: 'varchar',
+    length: 200,
+    default: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+  })
   avatar: string;
 
   @ApiProperty()

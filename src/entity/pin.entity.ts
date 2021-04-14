@@ -18,7 +18,7 @@ export class Pin {
 
   @ApiProperty()
   @Column({ type: 'text' })
-  message: string;
+  content: string;
 
   @ApiProperty()
   @Column({ type: 'int', default: 0 })

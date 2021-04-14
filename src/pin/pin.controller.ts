@@ -21,14 +21,14 @@ export class PinController {
   @Post('')
   async create(@Body() pin: Pin): Promise<ResponseData> {
     const result = await this.pinService.create(pin);
-    if (result == undefined) {
+    if (result.affectedRows >= 1) {
       return {
-        statusCode: 500,
-        message: '创建沸点失败',
+        statusCode: 200,
       };
     } else {
       return {
-        statusCode: 200,
+        statusCode: 500,
+        message: '创建沸点失败',
       };
     }
   }
