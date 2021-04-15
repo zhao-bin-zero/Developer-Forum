@@ -4,9 +4,8 @@
       <a-form-item label="文章标签名:">
         <a-select
           class="select"
-          v-model:value="value1"
-          style="width: 120px;z-index:99;position:absolute;"
-          @focus="focus"
+          v-model:value="select_value"
+          style="width: 120px;"
           ref="select"
           @change="handleChange"
         >
@@ -44,7 +43,7 @@ export default defineComponent({
   setup() {
     const editor = ref(); // 富文本编辑器
 
-    const select_value = ref();
+    const select_value = ref<number | string>('前端');
     const article = reactive<Article>({
       content: '', // 富文本编辑器内容
       content_html: '', // 富文本编辑器HTML
@@ -99,8 +98,6 @@ export default defineComponent({
       select_value,
       syncHTML,
       handleChange,
-      focus,
-      value1: ref('lucy'),
     };
   },
 });

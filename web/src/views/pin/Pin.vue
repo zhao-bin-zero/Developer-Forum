@@ -60,6 +60,7 @@ type ListData = {
     avatar: string | undefined;
     content: string | undefined;
     datetime: Date | moment.Moment;
+    actions?: any;
 }
 
 export default defineComponent({
@@ -116,6 +117,3 @@ export default defineComponent({
     },
 })
 </script>
-
-<style lang="scss" scoped>
-</style>

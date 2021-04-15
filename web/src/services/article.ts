@@ -9,6 +9,18 @@ const articleApi = {
     CountByTag: '/api/article/tagcount?tagname=',
 };
 
+
+/**
+ * 获得一篇文章数据文章
+ * @param article_id 文章id
+ */
+ export function artcileOne(article_id: number): AxiosPromise<Article> {
+    return request({
+        url: `${articleApi.List}/${article_id}`,
+        method: 'GET',
+    })
+}
+
 /**
  * 获取文章数据
  * @param currentPage 当前页

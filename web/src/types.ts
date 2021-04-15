@@ -11,7 +11,7 @@
 /**
  * 文章数据
  */
-export type Article = {
+export class Article {
     article_id?: number;
     title?: string;
     description?: string;

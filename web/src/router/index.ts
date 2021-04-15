@@ -13,13 +13,18 @@ const routes: Array<RouteRecordRaw> = [
         meta: { title: '首页', icon: '' },
       },
       {
+        path: '/article/:article_id',
+        component: () => import('@/views/article/ArticleView.vue'),
+        meta: { title: '文章详情', icon: '' },
+      },
+      {
         path: '/tag/:tagname',
         component: () => import('@/views/article/Article.vue'),
         meta: { title: '分类文章', icon: '' },
       },
       {
-        path: '/editor',
-        component: () => import('@/views/editor/Editor.vue'),
+        path: '/article/editor',
+        component: () => import('@/views/article/Editor.vue'),
         meta: { title: '新建文章', icon: '' },
       },
       {
@@ -32,11 +37,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/event/Event.vue'),
         meta: { title: '活动', icon: '' },
       },
-      {
-        path: '/books',
-        component: () => import('@/views/book/Book.vue'),
-        meta: { title: '小册', icon: '' },
-      },
+      // {
+      //   path: '/books',
+      //   component: () => import('@/views/book/Book.vue'),
+      //   meta: { title: '小册', icon: '' },
+      // },
     ],
   }
 ];

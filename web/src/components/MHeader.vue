@@ -13,9 +13,9 @@
       <li class="route-item">
         <router-link to="/pins">沸点</router-link>
       </li>
-      <li class="route-item">
+      <!-- <li class="route-item">
         <router-link to="/books">小册</router-link>
-      </li>
+      </li> -->
       <li class="route-item">
         <router-link to="/events">活动</router-link>
       </li>
@@ -72,7 +72,7 @@ export default defineComponent({
      * 发布文章事件
      */
     const handleButtonClick = (e: Event) => {
-      router.push('/editor');
+      router.push('/article/editor');
     };
 
     /**
