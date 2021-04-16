@@ -5,10 +5,10 @@
                 class="img"
                 src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
             />
-            <span>{{ user.username }}</span>
+            <span>{{ article.username }}</span>
             <span>{{ moment(article.created_at).startOf('day').fromNow() }}</span>
             <span>阅读{{ article.view }}</span>
-            <a-tag class="tag" :color="color16()">{{ tag.nickname }}</a-tag>
+            <a-tag class="tag" :color="color16()">{{ article.nickname }}</a-tag>
         </div>
         <h1 class="clear">{{ article.title }}</h1>
         <blockquote>{{ article.description }}</blockquote>
@@ -19,29 +19,21 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from 'vue'
 import { useRoute } from 'vue-router';
-import { getInfoById } from '../../services/user';
 import { artcileOne } from '../../services/article';
-import { Article, User, Tag } from '../../types';
-import { getTagInfo } from '../../services/tag';
+import { Article } from '../../types';
 import moment from 'moment';
+moment.locale('zh-cn');
 
 export default defineComponent({
     setup() {
         const route = useRoute();
         const state = reactive({
             article: {} as Article,
-            user: {} as User,
-            tag: {} as Tag,
         });
         const article_id = Number(route.params.article_id);
         onMounted(async () => {
             const { data: articleData } = await artcileOne(article_id);
             state.article = articleData;
-            const { data: userData } = await getInfoById(articleData.user_id);
-            state.user = userData;
-            const { data: tagData } = await getTagInfo(articleData.tag_id);
-            state.tag = tagData;
-            console.log(tagData);
         })
 
         /**

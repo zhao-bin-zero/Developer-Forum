@@ -50,8 +50,6 @@
 
 <script lang="ts">
 import { defineComponent, onBeforeMount, reactive, ref } from 'vue';
-import moment from 'moment';
-import { PinData } from '../../types';
 import { pinAdd, pinList } from '../../services/pin';
 import { useStore } from 'vuex';
 
@@ -111,7 +109,6 @@ export default defineComponent({
             pinData,
             submitting,
             value,
-            moment,
             handleSubmit,
         };
     },

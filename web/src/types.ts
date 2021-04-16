@@ -21,8 +21,11 @@ export class Article {
     content_html?: string;
     isPublished?: boolean;
     created_at?: Date;
-    update_at?: Date;
+    updated_at?: Date;
     user_id?: number;
+    username?: string;
+    tagname?: string;
+    nickname?: string;
     tag_id?: number;
 }
 
@@ -59,7 +62,7 @@ export class User {
 /**
  * 沸点数据
  */
-export type Pin = {
+export class Pin {
     user_id?:number;
     username?:string;
     avatar?:string;

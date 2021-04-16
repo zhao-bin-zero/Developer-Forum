@@ -80,6 +80,16 @@ export class ArticleController {
     };
   }
 
+  @Get('articlename/:articlename')
+  async articlename(): Promise<ResponseData> {
+    return {
+      statusCode: 200,
+      data: {
+        count: await this.articleService.count(),
+      },
+    };
+  }
+
   @Get(':article_id')
   async findOne(
     @Param('article_id') article_id: string,

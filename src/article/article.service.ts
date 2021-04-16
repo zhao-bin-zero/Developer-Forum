@@ -36,9 +36,9 @@ export class ArticleService {
   ): Promise<Article[]> {
     let sql = ``;
     if (currentPage == -1 && onePageAmount == -1) {
-      sql = `SELECT u.user_id, u.username,a.* FROM user u,article a WHERE u.user_id=a.user_id`;
+      sql = `SELECT u.user_id, u.username,t.nickname,t.tagname,t.tag_id,a.* FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id`;
     } else {
-      sql = `SELECT u.user_id, u.username,a.* FROM user u,article a WHERE u.user_id=a.user_id LIMIT ?,?`;
+      sql = `SELECT u.user_id, u.username,t.nickname,t.tagname,t.tag_id,a.* FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id LIMIT ?,?`;
     }
     const a = await this.articleRepository.query(sql, [
       (currentPage - 1) * onePageAmount,
@@ -49,7 +49,7 @@ export class ArticleService {
 
   async findOne(article_id: number) {
     const r = await this.articleRepository.query(
-      `SELECT u.user_id, u.username,a.* FROM user u,article a WHERE u.user_id=a.user_id AND article_id=?`,
+      `SELECT u.user_id, u.username,t.nickname,t.tagname,t.tag_id,a.* FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id AND article_id=?`,
       [article_id],
     );
     return r[0];
@@ -72,7 +72,7 @@ export class ArticleService {
     onePageAmount: number,
   ) {
     return await this.articleRepository.query(
-      `SELECT u.username,a.*,t.tagname FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id AND t.tagname=? LIMIT ?,?`,
+      `SELECT u.user_id, u.username,t.nickname,t.tagname,t.tag_id,a.* FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id AND t.tagname=? LIMIT ?,?`,
       [tagname, (currentPage - 1) * onePageAmount, currentPage * onePageAmount],
     );
   }
