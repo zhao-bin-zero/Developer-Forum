@@ -6,11 +6,6 @@
     :pagination="pagination"
     :data-source="listData"
   >
-    <template #footer>
-      <div>
-        <b>ant design vue</b> footer part
-      </div>
-    </template>
     <template #renderItem="{ item }">
       <a-list-item key="item.title">
         <template #actions>
