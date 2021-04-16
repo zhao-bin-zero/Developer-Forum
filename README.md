@@ -24,8 +24,8 @@
         - [ ] 关注者
         - [ ] 关注标签
 - 后端技术
-    - [] RBAC 用户角色权限
-    - [] HTTP/2 (not must)
+    - [ ] RBAC 用户角色权限
+    - [ ] HTTP/2 (not must)
     - [X] OpenAPI (Swagger)
     - [X] JSON Web Token (JWT)
     - [X] OAuth 2 (not must)
