@@ -72,3 +72,15 @@ export class Pin {
     updated_at?: Date;
     created_at?: Date;
 };
+
+/**
+ * 
+ */
+export type PinData = {
+    author: string | undefined|null;
+    avatar: string | undefined;
+    content: string | undefined;
+    datetime: Date | moment.Moment;
+    pin_id?: number | undefined;
+    actions?: any;
+}

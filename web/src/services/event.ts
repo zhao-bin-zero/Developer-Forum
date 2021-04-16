@@ -25,7 +25,7 @@ const eventApi = {
 /**
  * 活动总个数
  */
- export function pinCount(): AxiosPromise<any> {
+ export function eventCount(): AxiosPromise<any> {
     return request({
         url: eventApi.Count,
         method: 'GET',
@@ -35,9 +35,9 @@ const eventApi = {
 /**
  * 删除活动
  */
- export function pinDelete(pin_id: number): AxiosPromise<any> {
+ export function eventDelete(event_id: number): AxiosPromise<any> {
     return request({
-        url: `${eventApi.List}/${pin_id}`,
+        url: `${eventApi.List}/${event_id}`,
         method: 'DELETE',
     })
 }

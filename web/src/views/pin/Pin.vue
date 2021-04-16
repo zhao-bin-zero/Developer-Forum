@@ -9,9 +9,6 @@
             <template #renderItem="{ item }">
                 <a-list-item>
                     <a-comment :author="item.author" :avatar="item.avatar">
-                        <template #actions>
-                            <span v-for="(action, index) in item.actions" :key="index">{{ action }}</span>
-                        </template>
                         <template #content>
                             <p>{{ item.content }}</p>
                         </template>
@@ -49,38 +46,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, reactive, ref } from 'vue';
+import { defineComponent, onMounted, reactive, ref } from 'vue';
 import { pinAdd, pinList } from '../../services/pin';
-import { useStore } from 'vuex';
-
-type ListData = {
-    author: string | undefined;
-    avatar: string | undefined;
-    content: string | undefined;
-    datetime: Date | moment.Moment;
-    actions?: any;
-}
+import { DeleteOutlined } from '@ant-design/icons-vue';
+import moment from 'moment';
+import { PinData } from '../../types';
+moment.locale('zh-cn');
 
 export default defineComponent({
     name: 'Pin',
     setup() {
         const submitting = ref<boolean>(false);
         const value = ref<string>('');
-        const pinData = reactive<ListData[]>([])
-        const store = useStore();
+        const pinData = reactive<PinData[]>([])
 
-        onBeforeMount(async () => {
+        onMounted(async () => {
             await pinList(-1, -1).then(r => {
                 r.data.forEach(item => {
                     pinData.push({
                         author: item.username,
                         avatar: item.avatar,
                         content: item.content,
+                        pin_id: item.pin_id,
                         datetime: moment(item.created_at).subtract(2, 'days'),
                     })
                 })
             })
-        })
+        });
 
         const handleSubmit = () => {
             if (!value.value) {
@@ -89,17 +81,18 @@ export default defineComponent({
 
             submitting.value = true;
 
-            setTimeout(() => {
+            setTimeout(async () => {
                 submitting.value = false;
-                pinAdd({
-                    user_id: localStorage.getItem('user_id'),
+                const { data } = await pinAdd({
+                    user_id: Number(localStorage.getItem('user_id')),
                     content: value.value,
                 })
                 pinData.push({
-                    author: 'admin1',
+                    author: localStorage.getItem('username'),
                     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
                     content: value.value,
                     datetime: moment().subtract(2, 'days'),
+                    pin_id: data.pin_id
                 });
                 value.value = '';
             }, 1000);
@@ -112,5 +105,14 @@ export default defineComponent({
             handleSubmit,
         };
     },
+    components: {
+        DeleteOutlined,
+    }
 })
 </script>
+
+<style lang="scss" scoped>
+#pins {
+    width: 960px;
+}
+</style>

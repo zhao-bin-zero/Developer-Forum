@@ -1,10 +1,11 @@
 import { AxiosPromise } from 'axios';
-import { PinData } from '../types';
+import { Pin } from '../types';
 import request from '../utils/request';
 
 const pinApi = {
     List: '/api/pin',
     Count: '/api/pin/count',
+    ListByUserId:'/api/pin/user',
 };
 
 /**
@@ -12,11 +13,30 @@ const pinApi = {
  * @param currentPage 当前页
  * @param onePageAmount 一页最大沸点数
  */
- export function pinList(currentPage: number, onePageAmount: number):AxiosPromise<PinData[]> {
+ export function pinList(currentPage: number, onePageAmount: number):AxiosPromise<Pin[]> {
     return request({
         url: pinApi.List,
         method: 'GET',
         params: {
+            currentPage,
+            onePageAmount
+        }
+    })
+}
+
+/**
+ * 根据user_id获取沸点数据
+ * @param user_id 用户id
+ * @param currentPage 当前页
+ * @param onePageAmount 一页最大沸点数
+ * @returns 
+ */
+export function pinListByUserId(user_id:number,currentPage: number, onePageAmount: number):AxiosPromise<Pin[]> {
+    return request({
+        url: `${pinApi.ListByUserId}/${user_id}`,
+        method: 'GET',
+        params: {
+            user_id,
             currentPage,
             onePageAmount
         }
@@ -36,7 +56,7 @@ const pinApi = {
 /**
  * 添加沸点
  */
- export function pinAdd(pinData: any): AxiosPromise<any> {
+ export function pinAdd(pinData: Pin): any {
     return request({
         url: pinApi.List,
         method: 'POST',
@@ -47,7 +67,7 @@ const pinApi = {
 /**
  * 删除沸点
  */
- export function pinDelete(pin_id: number): AxiosPromise<any> {
+ export function pinDelete(pin_id: number): any {
     return request({
         url: `${pinApi.List}/${pin_id}`,
         method: 'DELETE',

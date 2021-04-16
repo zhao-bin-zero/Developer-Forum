@@ -24,6 +24,9 @@ export class PinController {
     if (result.affectedRows >= 1) {
       return {
         statusCode: 200,
+        data: {
+          pin_id: result.insertId,
+        },
       };
     } else {
       return {
@@ -59,6 +62,22 @@ export class PinController {
     return {
       statusCode: 200,
       data: await this.pinService.findOne(+pin_id),
+    };
+  }
+
+  @Get('user/:user_id')
+  async findListByUserId(
+    @Param('user_id') user_id: string,
+    @Query('currentPage') currentPage = 1,
+    @Query('onePageAmount') onePageAmount = 8,
+  ): Promise<ResponseData> {
+    return {
+      statusCode: 200,
+      data: await this.pinService.findPagingUserId(
+        +user_id,
+        currentPage,
+        onePageAmount,
+      ),
     };
   }
 

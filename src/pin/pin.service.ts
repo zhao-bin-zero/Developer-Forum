@@ -18,6 +18,7 @@ export class PinService {
         `INSERT INTO pin (user_id, content) VALUES (?,?)`,
         [user_id, content],
       );
+      console.log(r);
       return r;
     } catch (error) {
       Logger.error(error);
@@ -45,6 +46,25 @@ export class PinService {
       [pin_id],
     );
     return r[0];
+  }
+
+  async findPagingUserId(
+    user_id: number,
+    currentPage: number,
+    onePageAmount: number,
+  ): Promise<Pin[]> {
+    let sql = ``;
+    if (currentPage == -1 && onePageAmount == -1) {
+      sql = `SELECT u.user_id, u.username,u.avatar,p.* FROM user u,pin p WHERE u.user_id=p.user_id AND u.user_id=?`;
+    } else {
+      sql = `SELECT u.user_id, u.username,u.avatar,p.* FROM user u,pin p WHERE u.user_id=p.user_id AND u.user_id=? LIMIT ?,?`;
+    }
+    const r = await this.pinRepository.query(sql, [
+      user_id,
+      (currentPage - 1) * onePageAmount,
+      currentPage * onePageAmount,
+    ]);
+    return r;
   }
 
   async count() {
