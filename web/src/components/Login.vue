@@ -10,7 +10,7 @@
         <template #overlay>
           <a-menu>
             <a-menu-item>
-              <a href="javascript:;">我的主页</a>
+              <router-link to="/user/1">我的主页</router-link>
             </a-menu-item>
             <a-menu-item>
               <a href="javascript:;">我的收藏</a>

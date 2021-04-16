@@ -48,18 +48,18 @@ export class User {
 /**
  * 标签数据
  */
-export type Tag = {
-    tag_id?: number;
-    tagname?: string;
-    nickname?: string;
-    created_at?: Date;
+ export type Tag = {
+    tag_id?:number;
+    tagname?:string;
+    nickname?:string;
     updated_at?: Date;
-}
+    created_at?: Date;
+};
 
 /**
  * 沸点数据
  */
-export type PinData = {
+export type Pin = {
     user_id?:number;
     username?:string;
     avatar?:string;

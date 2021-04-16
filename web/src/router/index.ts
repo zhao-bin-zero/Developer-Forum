@@ -37,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/event/Event.vue'),
         meta: { title: '活动', icon: '' },
       },
+      {
+        path: '/user/:user_id',
+        component: () => import('@/views/user/User.vue'),
+        meta: { title: '主页', icon: '' },
+      },
       // {
       //   path: '/books',
       //   component: () => import('@/views/book/Book.vue'),

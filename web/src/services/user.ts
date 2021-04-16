@@ -5,6 +5,7 @@ const userApi = {
     Profile: '/api/auth/profile',
     Logout: '/api/auth/logout',
     Register: '/api/auth/register',
+    Info: '/api/user',
 }
 
 /**
@@ -31,12 +32,23 @@ export function logout(token: string) {
 }
 
 /**
- * 获取用户信息
+ * 通过token获取用户信息
  * @param token 认证token
  */
 export function getInfo(token: string) {
     return request({
         url: userApi.Profile,
         method: 'post'
+    })
+}
+
+/**
+ * 通过user_id获取用户信息
+ * @param user_id 用户id
+ */
+ export function getInfoById(user_id: number|undefined) {
+    return request({
+        url: `${userApi.Info}/${user_id}`,
+        method: 'GET'
     })
 }

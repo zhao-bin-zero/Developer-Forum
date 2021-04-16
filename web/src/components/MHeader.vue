@@ -15,7 +15,7 @@
       </li>
       <!-- <li class="route-item">
         <router-link to="/books">小册</router-link>
-      </li> -->
+      </li>-->
       <li class="route-item">
         <router-link to="/events">活动</router-link>
       </li>
@@ -69,7 +69,7 @@ export default defineComponent({
     };
 
     /**
-     * 发布文章事件
+     * 调整到文章发布页面
      */
     const handleButtonClick = (e: Event) => {
       router.push('/article/editor');
