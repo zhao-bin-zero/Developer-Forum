@@ -23,6 +23,12 @@
         - [ ] 关注了
         - [ ] 关注者
         - [ ] 关注标签
+- 后端技术
+    - [] RBAC 用户角色权限
+    - [] HTTP/2 (not must)
+    - [X] OpenAPI (Swagger)
+    - [X] JSON Web Token (JWT)
+    - [X] OAuth 2 (not must)
 
 ## 使用技术
 
@@ -35,11 +41,6 @@
 
 - Node.js
 - Nest.js
-- [X] OpenAPI (Swagger)
-- [X] JSON Web Token (JWT)
-- [] RBAC 用户角色权限
-- [X] OAuth 2 (not must)
-- [] HTTP/2 (not must)
 
 ### 数据库
 
