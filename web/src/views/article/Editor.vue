@@ -1,7 +1,7 @@
 <template>
   <div class="editor">
     <a-form>
-      <a-form-item label="文章标签名:">
+      <a-form-item required="true" label="文章标签名:">
         <a-select
           class="select"
           v-model:value="select_value"
@@ -19,8 +19,11 @@
           <a-select-option value="8">阅读</a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item label="文章名">
+      <a-form-item required="true" label="文章名">
         <a-input v-model:value="article.title" placeholder="文章名称" />
+      </a-form-item>
+      <a-form-item required="true" label="文章概述">
+        <a-input v-model:value="article.description" placeholder="文章概述" />
       </a-form-item>
       <a-form-item>
         <div ref="editor" class="ed"></div>
@@ -33,22 +36,27 @@
 </template>
 
 <script lang="ts">
-import WangEditor from 'https://cdn.skypack.dev/wangeditor';
+import WangEditor from 'wangeditor';
 import { defineComponent, onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import { artcileAdd } from '../../services/article';
 import { Article } from '../../types';
+import Message from 'ant-design-vue/es/message';
 
 export default defineComponent({
   name: 'Editor',
   setup() {
     const editor = ref(); // 富文本编辑器
 
-    const select_value = ref<number | string>('前端');
+    const select_value = ref<number | string>(1);
     const article = reactive<Article>({
+      description: '',
+      title: '',
       content: '', // 富文本编辑器内容
       content_html: '', // 富文本编辑器HTML
-      title: '',
       tag_id: 0,
+      enjoy: 0,
+      view: 0,
+      isPublished: true,
     });
 
     let instance: any;  // 文本编辑实例
@@ -73,10 +81,14 @@ export default defineComponent({
      */
     const syncHTML = () => {
       article.content_html = instance.txt.html();
+      article.content = instance.txt.text();
       (async () => {
         article.user_id = Number(localStorage.getItem('user_id'));
-        await artcileAdd(article).then((r) => {
-          console.log(r);
+        article.tag_id = Number(select_value.value);
+        await artcileAdd(article).then((r: any) => {
+          if (r.statusCode === 200) {
+            Message.success('成功发布文章')
+          }
         })
       })();
     };

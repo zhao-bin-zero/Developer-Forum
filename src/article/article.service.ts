@@ -14,13 +14,13 @@ export class ArticleService {
     @InjectRepository(Tag) private tagRepository: Repository<Tag>,
   ) {}
   async create(article: Article): Promise<Article> {
-    const user = new User();
-    user.user_id = article.user_id;
-    const tag = new Tag();
-    tag.tag_id = article.tag_id;
-    article.user = user;
-    article.tag = tag;
     try {
+      const user = new User();
+      user.user_id = article.user_id;
+      const tag = new Tag();
+      tag.tag_id = article.tag_id;
+      article.user = user;
+      article.tag = tag;
       await this.userRepository.save(user);
       await this.tagRepository.save(tag);
       return await this.articleRepository.save(article);
