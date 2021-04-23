@@ -15,7 +15,7 @@ export default {
     charset: 'utf8mb4',
     entities: ['./**/*.entity.js'],
     synchronize: true,
-    logging: false,
+    logging: true,
   },
   jwtConstants: {
     secret: 'secret',

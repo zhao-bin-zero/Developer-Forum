@@ -33,12 +33,22 @@ export class ArticleService {
   async findPaging(
     currentPage: number,
     onePageAmount: number,
+    user_id: number,
   ): Promise<Article[]> {
-    let sql = ``;
-    if (currentPage == -1 && onePageAmount == -1) {
-      sql = `SELECT u.user_id, u.username,t.nickname,t.tagname,t.tag_id,a.* FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id`;
-    } else {
-      sql = `SELECT u.user_id, u.username,t.nickname,t.tagname,t.tag_id,a.* FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id LIMIT ?,?`;
+    let sql = `SELECT u.user_id, u.username,t.nickname,t.tagname,t.tag_id,a.* FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id`;
+    if (user_id != -1) {
+      sql += ` AND u.user_id=?`;
+    }
+    if (currentPage != -1 && onePageAmount != -1) {
+      sql += ` LIMIT ?,?`;
+    }
+    if (user_id != -1) {
+      const a = await this.articleRepository.query(sql, [
+        user_id,
+        (currentPage - 1) * onePageAmount,
+        currentPage * onePageAmount,
+      ]);
+      return a;
     }
     const a = await this.articleRepository.query(sql, [
       (currentPage - 1) * onePageAmount,
@@ -55,26 +65,45 @@ export class ArticleService {
     return r[0];
   }
 
-  async count() {
-    return await this.articleRepository.count();
+  async count(user_id: number) {
+    let sql = `SELECT COUNT(*) count FROM article`;
+    if (user_id != -1) {
+      sql += ` WHERE user_id=${user_id}`;
+      return await this.articleRepository.query(sql);
+    }
+    return await this.articleRepository.query(sql);
   }
 
-  async tagCount(tagname: string) {
-    return await this.articleRepository.query(
-      `SELECT count(*) count FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id AND t.tagname=?`,
-      [tagname],
-    );
+  async tagCount(tagname: string, user_id: number) {
+    let sql = `SELECT count(*) count FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id AND t.tagname=?`;
+    if (user_id != -1) {
+      sql += ` AND u.user_id=${user_id}`;
+    }
+    return await this.articleRepository.query(sql, [tagname]);
   }
 
   async listByTagname(
     tagname: string,
     currentPage: number,
     onePageAmount: number,
+    user_id: number,
   ) {
-    return await this.articleRepository.query(
-      `SELECT u.user_id, u.username,t.nickname,t.tagname,t.tag_id,a.* FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id AND t.tagname=? LIMIT ?,?`,
-      [tagname, (currentPage - 1) * onePageAmount, currentPage * onePageAmount],
-    );
+    let sql = `SELECT u.user_id, u.username,t.nickname,t.tagname,t.tag_id,a.* FROM user u,article a,tag t WHERE u.user_id=a.user_id AND t.tag_id=a.tag_id AND t.tagname=?`;
+    if (user_id != -1) {
+      sql += `AND u.user_id=? LIMIT ?,?`;
+      return await this.articleRepository.query(sql, [
+        tagname,
+        user_id,
+        (currentPage - 1) * onePageAmount,
+        currentPage * onePageAmount,
+      ]);
+    }
+    sql += ` LIMIT ?,?`;
+    return await this.articleRepository.query(sql, [
+      tagname,
+      (currentPage - 1) * onePageAmount,
+      currentPage * onePageAmount,
+    ]);
   }
 
   async update(article_id: number, article: Article) {

@@ -25,14 +25,16 @@ const articleApi = {
  * 获取文章数据
  * @param currentPage 当前页
  * @param onePageAmount 一页最大文章数
+ * @param user_id 用户id
  */
-export function artcileList(currentPage: number, onePageAmount: number) {
+export function artcileList(currentPage: number, onePageAmount: number, user_id=-1) {
     return request({
         url: articleApi.List,
         method: 'GET',
         params: {
             currentPage,
-            onePageAmount
+            onePageAmount,
+            user_id,
         }
     })
 }
@@ -40,10 +42,13 @@ export function artcileList(currentPage: number, onePageAmount: number) {
 /**
  * 文章总个数
  */
-export function artcileCount(): AxiosPromise<any> {
+export function artcileCount(user_id=-1): AxiosPromise<any> {
     return request({
         url: articleApi.Count,
         method: 'GET',
+        params: {
+            user_id
+        }
     })
 }
 
@@ -53,9 +58,9 @@ export function artcileCount(): AxiosPromise<any> {
  * @param pageSize 一页最大文章数
  * @param listData 文章列表
  */
-export async function getList(current: number, pageSize: number, listData: ArticleData[], tagname: any): Promise<void> {
+export async function getList(current: number, pageSize: number, listData: ArticleData[], tagname: any,user_id=-1): Promise<void> {
     // 获得文章列表
-    const articleData: any = tagname ? await listByTagname(tagname, current, pageSize) : await artcileList(current, pageSize);
+    const articleData: any = tagname ? await listByTagname(tagname, current, pageSize,user_id) : await artcileList(current, pageSize,user_id);
     articleData.data.forEach((item: ArticleData) => {
         item.actions = [
             { type: 'StarOutlined', text: item.view },
@@ -71,20 +76,28 @@ export async function getList(current: number, pageSize: number, listData: Artic
  * @param currentPage 当前页
  * @param onePageAmount 一页最大文章数
  */
-export async function listByTagname(tagname: any, currentPage: number, onePageAmount: number) {
+export async function listByTagname(tagname: any, currentPage: number, onePageAmount: number,user_id=-1) {
     return request({
         url: `${articleApi.ListByTag}/${tagname}`,
         method: 'GET',
+        params: {
+            currentPage,
+            onePageAmount,
+            user_id,
+        },
     })
 }
 
 /**
  * 文章总个数
  */
-export function artcileCountByName(tagname: any): AxiosPromise<any> {
+export function artcileCountByName(tagname: any, user_id=-1): AxiosPromise<any> {
     return request({
         url: `${articleApi.CountByTag}${tagname}`,
         method: 'GET',
+        params: {
+            user_id,
+        },
     })
 }
 

@@ -93,13 +93,6 @@ export default defineComponent({
       })();
     };
 
-    /**
-     * 多选
-     */
-    const focus = () => {
-      console.log('focus');
-    };
-
     const handleChange = (value: string) => {
       console.log(`selected ${value}`);
     };

@@ -2,7 +2,10 @@
   <div id="user container">
     <a-tabs v-model:activeKey="activeKey">
       <a-tab-pane key="1" tab="动态">Content of Tab Pane 1</a-tab-pane>
-      <a-tab-pane key="2" tab="文章" force-render>Content of Tab Pane 2</a-tab-pane>
+      <a-tab-pane key="2" tab="文章" force-render>
+        文章列表
+        <own-article />
+      </a-tab-pane>
       <a-tab-pane key="3" tab="沸点">
         <Message></Message>
       </a-tab-pane>
@@ -24,11 +27,13 @@
 </template>
 
 <script lang="ts">
+import OwnArticle from '../../components/OwnArticle.vue';
 import { defineComponent, ref } from 'vue';
 import Message from './Message.vue';
 export default defineComponent({
   components: {
-    Message
+    Message,
+    OwnArticle,
   },
   setup() {
     const data = [

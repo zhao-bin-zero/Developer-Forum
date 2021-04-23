@@ -37,29 +37,37 @@ export class ArticleController {
   async index(
     @Query('currentPage') currentPage = 1,
     @Query('onePageAmount') onePageAmount = 8,
+    @Query('user_id') user_id = -1,
   ): Promise<ResponseData> {
     return {
       statusCode: 200,
-      data: await this.articleService.findPaging(currentPage, onePageAmount),
+      data: await this.articleService.findPaging(
+        currentPage,
+        onePageAmount,
+        +user_id,
+      ),
     };
   }
 
   @Get('count')
-  async count(): Promise<ResponseData> {
+  async count(@Query('user_id') user_id = -1): Promise<ResponseData> {
     return {
       statusCode: 200,
       data: {
-        count: await this.articleService.count(),
+        count: (await this.articleService.count(+user_id))[0].count,
       },
     };
   }
 
   @Get('tagcount')
-  async tagCount(@Query('tagname') tagname: string): Promise<ResponseData> {
+  async tagCount(
+    @Query('tagname') tagname: string,
+    @Query('user_id') user_id = -1,
+  ): Promise<ResponseData> {
     return {
       statusCode: 200,
       data: {
-        count: (await this.articleService.tagCount(tagname))[0].count,
+        count: (await this.articleService.tagCount(tagname, +user_id))[0].count,
       },
     };
   }
@@ -69,6 +77,7 @@ export class ArticleController {
     @Param('tagname') tagname,
     @Query('currentPage') currentPage = 1,
     @Query('onePageAmount') onePageAmount = 8,
+    @Query('user_id') user_id = -1,
   ): Promise<ResponseData> {
     return {
       statusCode: 200,
@@ -76,17 +85,8 @@ export class ArticleController {
         tagname,
         currentPage,
         onePageAmount,
+        +user_id,
       ),
-    };
-  }
-
-  @Get('articlename/:articlename')
-  async articlename(): Promise<ResponseData> {
-    return {
-      statusCode: 200,
-      data: {
-        count: await this.articleService.count(),
-      },
     };
   }
 
@@ -119,7 +119,7 @@ export class ArticleController {
   }
 
   @Delete(':article_id')
-  async remove(@Param('id') article_id: string): Promise<ResponseData> {
+  async remove(@Param('article_id') article_id: string): Promise<ResponseData> {
     return await this.articleService.remove(+article_id);
   }
 }
